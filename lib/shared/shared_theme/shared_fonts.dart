@@ -7,6 +7,9 @@ class SharedFonts {
       fontSize: 20.0,
       fontWeight: FontWeight.bold);
 
+  static final TextStyle whiteTxtStyle = TextStyle(
+      color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold);
+
   static final TextStyle subTxtStylePrimaryColor =
       TextStyle(color: SharedColors.primaryColor, fontSize: 15.0);
 
