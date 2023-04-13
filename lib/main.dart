@@ -5,6 +5,7 @@ import 'package:noor/shared/shared_screens/homepage.dart';
 import 'package:noor/shared/shared_screens/login_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:noor/users/logic/users_cubit.dart';
+import 'package:noor/voice_assist/logic/voice_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,10 +25,13 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => UserCubit(),
         ),
+        BlocProvider(
+          create: (context) => VoiceCubit(),
+        ),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: LoginScreen(),
       ),
     );
   }

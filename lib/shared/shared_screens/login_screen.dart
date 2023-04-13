@@ -9,6 +9,7 @@ import 'package:noor/shared/shared_theme/shared_fonts.dart';
 import 'package:noor/shared/shared_widgets/error_txt_widget.dart';
 import 'package:noor/users/screens/add_user.dart';
 import 'package:noor/users/screens/users_list.dart';
+import 'package:noor/voice_assist/logic/voice_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: SharedColors.secondaryColor,
         child: Icon(Icons.people, color: SharedColors.primaryColor, size: 25.0),
         onPressed: () {
+          BlocProvider.of<VoiceCubit>(context).initVoice();
           Navigator.push(
               context, MaterialPageRoute(builder: (_) => TrustedUsersList()));
           // Navigator.pushReplacement(
