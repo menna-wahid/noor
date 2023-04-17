@@ -22,7 +22,8 @@ final Map<String, dynamic> txts = {
     'paper': 'Say paper for Reading Docs',
   },
   'errorMsg': 'Not Understand Speak Again',
-  'scanObjectMsg': 'Now Object Scanning Ready'
+  'scanObjectMsg': 'Now Object Scanning Ready',
+  'openPeopleScreenMsg': ''
 };
 
 Map<String, Map<String, dynamic>> categoryData = {
