@@ -53,15 +53,6 @@ class VoiceController {
 
   Reuse =>
 
-  open to start with 
-
-
-    How to use the same methods in another Cubit => 
-        - listen need to return the listen valud and will handled with contains condition to excute the process needed
-        - pause need to be only excuted
-        - play need to be only excuted
-        - cancel need to be only excuted
-
     Home
       - Listen Choosed Service
 

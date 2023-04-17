@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:noor/cache_reco/screens/cash_screen.dart';
+import 'package:noor/navigation/logic/navigation_cubit.dart';
+import 'package:noor/object_detection/screens/object_screen.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
+import 'package:noor/uber_screen.dart';
+import 'package:noor/users/screens/users_list.dart';
 
 final Map<String, dynamic> txts = {
   'loginWelcomeMsg':
@@ -20,25 +25,30 @@ final Map<String, dynamic> txts = {
   'scanObjectMsg': 'Now Object Scanning Ready'
 };
 
-List<Map<String, dynamic>> categoryData = [
-  {
+Map<String, Map<String, dynamic>> categoryData = {
+  Services.people.name: {
     'icon': 'assets/icons/face.png',
     'color': SharedColors.primaryColor,
+    'screen': TrustedUsersList()
   },
-  {
+  Services.cash.name: {
     'icon': 'assets/icons/cache.png',
     'color': SharedColors.secondaryColor,
+    'screen': CashScreen()
   },
-  {
+  Services.object.name: {
     'icon': 'assets/icons/object.png',
     'color': Colors.red,
+    'screen': ObjectScreen()
   },
-  {
+  Services.uber.name: {
     'icon': 'assets/icons/uber.png',
     'color': Colors.indigo,
+    'screen': UberScreen()
   },
-  {
+  Services.paper.name: {
     'icon': 'assets/icons/voice.png',
     'color': Colors.blueAccent,
+    'screen': TrustedUsersList()
   },
-];
+};

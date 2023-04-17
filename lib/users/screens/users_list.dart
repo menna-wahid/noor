@@ -15,12 +15,6 @@ class _TrustedUsersListState extends State<TrustedUsersList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: SharedColors.backGroundColor,
-      appBar: AppBar(
-        backgroundColor: SharedColors.backGroundColor,
-        elevation: 0.0,
-        title: Text('My Trusted Users', style: SharedFonts.primaryTxtStyle),
-        iconTheme: IconThemeData(color: SharedColors.primaryColor, size: 25.0),
-      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: SharedColors.secondaryColor,
         child: Icon(Icons.person_add_alt_1_sharp,

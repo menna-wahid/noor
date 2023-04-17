@@ -34,25 +34,17 @@ class NavigationCubit extends Cubit<NavigationState> {
     // await _navigationScreenSpeak(txts['appFeatures']['uber']);
     // await voiceController.tts.awaitSpeakCompletion(true);
     // await _navigationScreenSpeak(txts['appFeatures']['paper']);
-    // await voiceController.tts.awaitSpeakCompletion(true);
-    // await _navigationScreenSpeak(txts['chooseFeature']);
 
     await _listenNow();
-  }
-
-  Future _listenNow() async {
-    await voiceController.tts.awaitSpeakCompletion(true);
-    await _navigationScreenSpeak(txts['chooseFeature']);
-    await voiceController.tts.awaitSpeakCompletion(true);
-    await _listenToService();
-    await voiceController.tts.awaitSpeakCompletion(true);
   }
 
   Future _listenToService() async {
     await voiceController.stt.listen(
       onResult: (SpeechRecognitionResult r) {
         print(r);
-        _navigatingService(r.recognizedWords);
+        if (r.finalResult) {
+          _navigatingService(r.recognizedWords);
+        }
       },
       listenFor: Duration(seconds: 4),
     );
@@ -60,6 +52,17 @@ class NavigationCubit extends Cubit<NavigationState> {
 
   Future _navigationScreenSpeak(String txt) async {
     await voiceController.speak(txt);
+  }
+
+  Future errorScreenSpeak() async {
+    await _navigationScreenSpeak(txts['errorMsg']);
+  }
+
+  Future _listenNow() async {
+    await voiceController.tts.awaitSpeakCompletion(true);
+    await _navigationScreenSpeak(txts['chooseFeature']);
+    await voiceController.tts.awaitSpeakCompletion(true);
+    await _listenToService();
   }
 
   void _navigatingService(String service) async {
@@ -71,19 +74,21 @@ class NavigationCubit extends Cubit<NavigationState> {
       Services.uber.name
     ];
     bool isCorrect = false;
-    for (String i in services) {
-      if (i.contains(service.toLowerCase().trim())) {
+    String newService = 'home';
+    for (int i = 0; i < services.length; i++) {
+      if (services[i].contains(service.toLowerCase().trim())) {
         isCorrect = true;
+        newService = services[i];
         break;
       }
     }
 
-    await voiceController.tts.awaitSpeakCompletion(true);
-
     if (!isCorrect) {
+      await voiceController.tts.awaitSpeakCompletion(true);
       await _navigationScreenSpeak(txts['errorMsg']);
       await _listenNow();
     } else {
+      emit(ScreenNavigationState(categoryData[newService]!['screen']));
       await _navigationScreenSpeak('correct thank you');
     }
   }
