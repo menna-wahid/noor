@@ -6,7 +6,7 @@ import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/uber_screen.dart';
 import 'package:noor/users/screens/users_list.dart';
 
-final Map<String, dynamic> txts = {
+final Map<String, dynamic> entxts = {
   'loginWelcomeMsg':
       'Welcome to Noor App, Put the camera front of your face to login',
   'loginSuccessMsg': '',
@@ -23,6 +23,25 @@ final Map<String, dynamic> txts = {
   },
   'errorMsg': 'Not Understand Speak Again',
   'scanObjectMsg': 'Now Object Scanning Ready',
+  'openPeopleScreenMsg': ''
+};
+
+final Map<String, dynamic> artxts = {
+  'loginWelcomeMsg': 'مرحبا في تطبيق نور، ضع الكاميرا امام وجهك لتسجيل الدخول',
+  'loginSuccessMsg': '',
+  'loginErrorMsg': '',
+  'wlcMsg': 'مرحبا',
+  'ourFeatures': 'خدماتنا هي',
+  'chooseFeature': 'اي خدمه تريد؟',
+  'appFeatures': {
+    'اشخاص': 'انطق كلمة اشخاص لاختيار خدمة الاشخخاص الموثوق بها',
+    'نقود': 'انطق كلمة نقود لاختيار خدمة للتعرف على النقود',
+    'اغراض': 'انطق كلمة اغراض لاختيار خدمة التعرف على الاشياء',
+    'اوبر': 'انطق كلمة اوبر لطلب رحلة',
+    'مستند': 'انطق كلمة مستند لقرائة المستندات',
+  },
+  'errorMsg': 'معذرة لا افهمك انطق مرة اخرى',
+  'scanObjectMsg': 'تم التعرف على الخدمة المطلوبة اغراض',
   'openPeopleScreenMsg': ''
 };
 

@@ -1,4 +1,5 @@
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:noor/main.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 enum TtsState { playing, stopped, paused, continued }
@@ -16,7 +17,7 @@ class VoiceController {
     tts = FlutterTts();
     stt = SpeechToText();
     await stt.initialize();
-    tts.setLanguage('en');
+    tts.setLanguage(selectedLang);
     await tts.awaitSpeakCompletion(true);
   }
 
@@ -46,43 +47,3 @@ class VoiceController {
     }
   }
 }
-
-
-
-/*
-
-  Reuse =>
-
-    Home
-      - Listen Choosed Service
-
-
-    Cache
-      - Welcome to Cache Speak
-      - Collect Cache Request Listen ( Request )
-      - Collected Cache Listen
-      - Error Cache Speak
-
-
-    Object
-      - Welcome to Object Speak
-      - Collect Object Request Listen ( Request )
-      - Collected Object Listen
-      - Error Object Speak
-
-
-    Trusted People 
-      - Welcome to Trusted People Speak
-      - Verify Trusted People Listen ( Request )
-      - Verify Trusted People Speak
-      - Error Trusted People Speak
-
-
-    Read Docs 
-      - Welcome to Read Docs Speak
-      - Read Docs Listen ( Request )
-      - Verify Read Docs Speak
-      - Error Read Docs Speak
-
-
-*/

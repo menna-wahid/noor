@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:noor/shared/shared_theme/shared_colors.dart';
+import 'package:noor/shared/shared_theme/shared_fonts.dart';
 
 import '../../object_detection/screens/camera_view.dart';
 import 'painters/face_detector_painter.dart';
@@ -31,14 +33,23 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
 
   @override
   Widget build(BuildContext context) {
-    return CameraView(
-      title: 'Face Detector',
-      customPaint: _customPaint,
-      text: _text,
-      onImage: (inputImage) {
-        processImage(inputImage);
-      },
-      initialDirection: CameraLensDirection.back,
+    return Scaffold(
+      backgroundColor: SharedColors.backGroundColor,
+      appBar: AppBar(
+        backgroundColor: SharedColors.backGroundColor,
+        elevation: 0.0,
+        title: Text('Face Detect', style: SharedFonts.primaryTxtStyle),
+        iconTheme: IconThemeData(color: SharedColors.primaryColor, size: 25.0),
+      ),
+      body: CameraView(
+        title: 'Face Detector',
+        customPaint: _customPaint,
+        text: _text,
+        onImage: (inputImage) {
+          processImage(inputImage);
+        },
+        initialDirection: CameraLensDirection.back,
+      ),
     );
   }
 
@@ -50,7 +61,6 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
       _text = '';
     });
     final faces = await _faceDetector.processImage(inputImage);
-    // faces[0].
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       final painter = FaceDetectorPainter(
@@ -58,6 +68,9 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
           inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
       _customPaint = CustomPaint(painter: painter);
+      // if (faces.isNotEmpty) {
+      //   print('Face =========> ${faces[0]}');
+      // }
     } else {
       String text = 'Faces found: ${faces.length}\n\n';
       for (final face in faces) {

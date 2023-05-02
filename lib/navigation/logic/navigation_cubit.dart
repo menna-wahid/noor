@@ -12,14 +12,15 @@ class NavigationCubit extends Cubit<NavigationState> {
   Services selectedService = Services.home;
 
   void errorNavigationSpeak() async {
-    await _navigationScreenSpeak(txts['errorMsg']);
+    await _navigationScreenSpeak(selectedVoicLang['errorMsg']);
   }
 
   void initNavigation() async {
     DateTime dateTime = DateTime.now();
     String date = dateTime.toString().substring(0, 10);
     String time = dateTime.toString().substring(11, 17);
-    String txt = 'Today is $date and Time is $time and ${txts['ourFeatures']}}';
+    String txt =
+        '${selectedLang == 'ar' ? 'اليوم هو' : 'Today is'} $date ${selectedLang == 'ar' ? 'والساعه هي' : 'and Time is'} $time ${selectedLang == 'ar' ? 'و' : 'and'} ${selectedVoicLang['ourFeatures']}}';
 
     // await _navigationScreenSpeak(txts['wlcMsg']);
     // await voiceController.tts.awaitSpeakCompletion(true);
@@ -55,12 +56,12 @@ class NavigationCubit extends Cubit<NavigationState> {
   }
 
   Future errorScreenSpeak() async {
-    await _navigationScreenSpeak(txts['errorMsg']);
+    await _navigationScreenSpeak(selectedVoicLang['errorMsg']);
   }
 
   Future _listenNow() async {
     await voiceController.tts.awaitSpeakCompletion(true);
-    await _navigationScreenSpeak(txts['chooseFeature']);
+    await _navigationScreenSpeak(selectedVoicLang['chooseFeature']);
     await voiceController.tts.awaitSpeakCompletion(true);
     await _listenToService();
   }
@@ -85,7 +86,7 @@ class NavigationCubit extends Cubit<NavigationState> {
 
     if (!isCorrect) {
       await voiceController.tts.awaitSpeakCompletion(true);
-      await _navigationScreenSpeak(txts['errorMsg']);
+      await _navigationScreenSpeak(selectedVoicLang['errorMsg']);
       await _listenNow();
     } else {
       emit(ScreenNavigationState(categoryData[newService]!['screen']));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noor/main.dart';
 import 'package:noor/navigation/logic/navigation_cubit.dart';
 import 'package:noor/navigation/logic/navigation_state.dart';
 import 'package:noor/shared/shared_data.dart';
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(i['icon']), fit: BoxFit.fill)),
-                  ))
+                  )),
           ],
         ),
       );

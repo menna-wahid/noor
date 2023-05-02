@@ -22,3 +22,16 @@ class _UberScreenState extends State<UberScreen> {
     );
   }
 }
+
+
+/*
+
+  ClientId, ClientSecret, ServerToken
+
+  1- Selecting Service ( UberX )
+  2- Specifying Pickup & Dropoff Location
+  3- Viweing time and price estimates
+  4- Requesting a Ride
+
+
+*/

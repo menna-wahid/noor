@@ -18,7 +18,7 @@ class UserCubit extends Cubit<UserState> {
   }
 
   void initLoginScreen() {
-    _loginScreenSpeak(txts['loginWelcomeMsg']!);
+    _loginScreenSpeak(selectedVoicLang['loginWelcomeMsg']!);
   }
 
   void _loginScreenSpeak(String txt) async {

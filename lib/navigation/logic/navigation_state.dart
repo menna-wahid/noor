@@ -10,3 +10,5 @@ class ScreenNavigationState extends NavigationState {
   Widget screen;
   ScreenNavigationState(this.screen);
 }
+
+class ChangeLang extends NavigationState {}
