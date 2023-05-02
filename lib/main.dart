@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noor/face_detection/logic/face_cubit.dart';
 import 'package:noor/navigation/logic/navigation_cubit.dart';
+import 'package:noor/secondmain.dart';
 import 'package:noor/users/screens/login_screen.dart';
 import 'package:noor/users/logic/users_cubit.dart';
 import 'package:noor/voice_assist/logic/voice_controller.dart';
@@ -37,7 +38,8 @@ class _MyAppState extends State<MyApp> {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
+        // home: LoginScreen(),
+        home: Home(),
       ),
     );
   }

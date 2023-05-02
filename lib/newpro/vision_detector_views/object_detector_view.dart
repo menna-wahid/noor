@@ -1,27 +1,21 @@
+import 'dart:io' as io;
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
-import 'package:noor/main.dart';
-import 'package:noor/object_detection/screens/camera_view.dart';
-import 'package:noor/newpro/vision_detector_views/painters/object_detector_painter.dart';
-import 'package:noor/shared/shared_theme/shared_colors.dart';
-import 'package:noor/shared/shared_theme/shared_fonts.dart';
 import 'package:path/path.dart';
-import 'dart:io' as io;
-
 import 'package:path_provider/path_provider.dart';
 
-class ObjectScreen extends StatefulWidget {
-  const ObjectScreen({super.key});
+import '../../object_detection/screens/camera_view.dart';
+import 'painters/object_detector_painter.dart';
 
+class ObjectDetectorView extends StatefulWidget {
   @override
-  State<ObjectScreen> createState() => _ObjectScreenState();
+  State<ObjectDetectorView> createState() => _ObjectDetectorView();
 }
 
-class _ObjectScreenState extends State<ObjectScreen> {
-  late CameraController controller;
-  late List<CameraDescription> cameras;
+class _ObjectDetectorView extends State<ObjectDetectorView> {
   late ObjectDetector _objectDetector;
   bool _canProcess = false;
   bool _isBusy = false;
@@ -30,9 +24,9 @@ class _ObjectScreenState extends State<ObjectScreen> {
 
   @override
   void initState() {
-    initCamera();
-    _initializeDetector(DetectionMode.stream);
     super.initState();
+
+    _initializeDetector(DetectionMode.stream);
   }
 
   @override
@@ -42,33 +36,17 @@ class _ObjectScreenState extends State<ObjectScreen> {
     super.dispose();
   }
 
-  Future initCamera() async {
-    cameras = await availableCameras();
-    controller = CameraController(cameras[1], ResolutionPreset.max);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: SharedColors.backGroundColor,
-      appBar: AppBar(
-        backgroundColor: SharedColors.backGroundColor,
-        elevation: 0.0,
-        title: Text('Object Detection', style: SharedFonts.primaryTxtStyle),
-        iconTheme: IconThemeData(color: SharedColors.primaryColor, size: 25.0),
-      ),
-      body: Container(
-        child: CameraView(
-          title: 'Object Detection',
-          customPaint: _customPaint,
-          text: _text,
-          onImage: (inputImage) {
-            processImage(inputImage);
-          },
-          onScreenModeChanged: _onScreenModeChanged,
-          initialDirection: CameraLensDirection.back,
-        ),
-      ),
+    return CameraView(
+      title: 'Object Detector',
+      customPaint: _customPaint,
+      text: _text,
+      onImage: (inputImage) {
+        processImage(inputImage);
+      },
+      onScreenModeChanged: _onScreenModeChanged,
+      initialDirection: CameraLensDirection.back,
     );
   }
 
@@ -85,6 +63,17 @@ class _ObjectScreenState extends State<ObjectScreen> {
   }
 
   void _initializeDetector(DetectionMode mode) async {
+    print('Set detector in mode: $mode');
+
+    // uncomment next lines if you want to use the default model
+    // final options = ObjectDetectorOptions(
+    //     mode: mode,
+    //     classifyObjects: true,
+    //     multipleObjects: true);
+    // _objectDetector = ObjectDetector(options: options);
+
+    // uncomment next lines if you want to use a local model
+    // make sure to add tflite model to assets/ml
     final path = 'assets/ml/object_labeler.tflite';
     final modelPath = await _getModel(path);
     final options = LocalObjectDetectorOptions(
@@ -94,6 +83,21 @@ class _ObjectScreenState extends State<ObjectScreen> {
       multipleObjects: true,
     );
     _objectDetector = ObjectDetector(options: options);
+
+    // uncomment next lines if you want to use a remote model
+    // make sure to add model to firebase
+    // final modelName = 'bird-classifier';
+    // final response =
+    //     await FirebaseObjectDetectorModelManager().downloadModel(modelName);
+    // print('Downloaded: $response');
+    // final options = FirebaseObjectDetectorOptions(
+    //   mode: mode,
+    //   modelName: modelName,
+    //   classifyObjects: true,
+    //   multipleObjects: true,
+    // );
+    // _objectDetector = ObjectDetector(options: options);
+
     _canProcess = true;
   }
 
@@ -112,11 +116,6 @@ class _ObjectScreenState extends State<ObjectScreen> {
           inputImage.inputImageData!.imageRotation,
           inputImage.inputImageData!.size);
       _customPaint = CustomPaint(painter: painter);
-      for (var i in objects) {
-        for (var x in i.labels) {
-          voiceController.speak(x.text, speech: 0.3);
-        }
-      }
     } else {
       String text = 'Objects found: ${objects.length}\n\n';
       for (final object in objects) {
@@ -124,6 +123,7 @@ class _ObjectScreenState extends State<ObjectScreen> {
             'Object:  trackingId: ${object.trackingId} - ${object.labels.map((e) => e.text)}\n\n';
       }
       _text = text;
+      // TODO: set _customPaint to draw boundingRect on top of image
       _customPaint = null;
     }
     _isBusy = false;

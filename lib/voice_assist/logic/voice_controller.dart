@@ -20,9 +20,9 @@ class VoiceController {
     await tts.awaitSpeakCompletion(true);
   }
 
-  Future speak(String speakTxt) async {
+  Future speak(String speakTxt, {double speech = 0.2}) async {
     await tts.setVolume(1.0);
-    await tts.setSpeechRate(0.2);
+    await tts.setSpeechRate(speech);
     await tts.setPitch(1.0);
 
     if (speakTxt != null) {
