@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noor/cache_reco/screens/cash_screen.dart';
 import 'package:noor/face_detection/logic/face_cubit.dart';
 import 'package:noor/face_detection/logic/face_state.dart';
 import 'package:noor/main.dart';
@@ -15,6 +16,13 @@ import 'package:noor/shared/shared_widgets/error_txt_widget.dart';
 import 'package:noor/users/logic/users_cubit.dart';
 import 'package:noor/users/screens/users_list.dart';
 
+List<CameraDescription> cameras = [];
+
+Future<void> newmain() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
+}
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -23,6 +31,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    newmain();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LangCubit, LangState>(
@@ -45,10 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Icon(Icons.people,
                     color: SharedColors.primaryColor, size: 25.0),
                 onPressed: () {
-                  // Navigator.push(
-                  //     context, MaterialPageRoute(builder: (_) => TrustedUsersList()));
                   Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (_) => HomePage()));
+                      context, MaterialPageRoute(builder: (_) => CashScreen()));
                 },
               ),
               FloatingActionButton(

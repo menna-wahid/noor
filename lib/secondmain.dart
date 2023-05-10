@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:noor/cache_reco/screens/cash_screen.dart';
 import 'package:noor/object_detection/screens/object_screen.dart';
 
 import 'newpro/nlp_detector_views/entity_extraction_view.dart';
@@ -15,12 +16,12 @@ import 'newpro/vision_detector_views/pose_detector_view.dart';
 import 'newpro/vision_detector_views/selfie_segmenter_view.dart';
 import 'text_detector_view.dart';
 
-List<CameraDescription> cameras = [];
+// List<CameraDescription> cameras = [];
 
-Future<void> newmain() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
-}
+// Future<void> newmain() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   cameras = await availableCameras();
+// }
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -32,7 +33,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void initState() {
-    newmain();
+    // newmain();
     super.initState();
   }
 
@@ -59,7 +60,7 @@ class _HomeState extends State<Home> {
                       CustomCard('Image Labeling', ImageLabelView()),
                       CustomCard('Object Detection', ObjectScreen()),
                       CustomCard('Text Recognition', ReadDocs()),
-                      CustomCard('Digital Ink Recognition', DigitalInkView()),
+                      CustomCard('Digital Ink Recognition', CashScreen()),
                       CustomCard('Pose Detection', PoseDetectorView()),
                       CustomCard('Selfie Segmentation', SelfieSegmenterView()),
                     ],

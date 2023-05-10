@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noor/face_detection/logic/face_cubit.dart';
@@ -13,9 +13,11 @@ import 'package:noor/voice_assist/logic/voice_controller.dart';
 
 String selectedLang = 'en';
 Map selectedVoicLang = {};
+List<CameraDescription> cameras = [];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   runApp(MyApp());
 }
 
