@@ -4,7 +4,7 @@ import 'package:noor/navigation/logic/navigation_state.dart';
 import 'package:noor/shared/shared_data.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 
-enum Services { home, people, cash, object, uber, paper }
+enum Services { home, people, money, object, uber, paper }
 
 class NavigationCubit extends Cubit<NavigationState> {
   NavigationCubit() : super(InitNavigationState());
@@ -22,19 +22,30 @@ class NavigationCubit extends Cubit<NavigationState> {
     String txt =
         '${selectedLang == 'ar' ? 'اليوم هو' : 'Today is'} $date ${selectedLang == 'ar' ? 'والساعه هي' : 'and Time is'} $time ${selectedLang == 'ar' ? 'و' : 'and'} ${selectedVoicLang['ourFeatures']}}';
 
-    // await _navigationScreenSpeak(txts['wlcMsg']);
-    // await voiceController.tts.awaitSpeakCompletion(true);
-    // await _navigationScreenSpeak(txt);
-    // await voiceController.tts.awaitSpeakCompletion(true);
-    // await _navigationScreenSpeak(txts['appFeatures']['people']);
-    // await voiceController.tts.awaitSpeakCompletion(true);
-    // await _navigationScreenSpeak(txts['appFeatures']['cache']);
-    // await voiceController.tts.awaitSpeakCompletion(true);
-    // await _navigationScreenSpeak(txts['appFeatures']['object']);
-    // await voiceController.tts.awaitSpeakCompletion(true);
-    // await _navigationScreenSpeak(txts['appFeatures']['uber']);
-    // await voiceController.tts.awaitSpeakCompletion(true);
-    // await _navigationScreenSpeak(txts['appFeatures']['paper']);
+    await _navigationScreenSpeak(
+        selectedLang == 'ar' ? artxts['wlcMsg'] : entxts['wlcMsg']);
+    await voiceController.tts.awaitSpeakCompletion(true);
+    await _navigationScreenSpeak(txt);
+    await voiceController.tts.awaitSpeakCompletion(true);
+    await _navigationScreenSpeak(selectedLang == 'ar'
+        ? artxts['appFeatures']['اشخاص']
+        : entxts['appFeatures']['people']);
+    await voiceController.tts.awaitSpeakCompletion(true);
+    await _navigationScreenSpeak(selectedLang == 'ar'
+        ? artxts['appFeatures']['نقود']
+        : entxts['appFeatures']['money']);
+    await voiceController.tts.awaitSpeakCompletion(true);
+    await _navigationScreenSpeak(selectedLang == 'ar'
+        ? artxts['appFeatures']['اغراض']
+        : entxts['appFeatures']['object']);
+    await voiceController.tts.awaitSpeakCompletion(true);
+    await _navigationScreenSpeak(selectedLang == 'ar'
+        ? artxts['appFeatures']['اوبر']
+        : entxts['appFeatures']['uber']);
+    await voiceController.tts.awaitSpeakCompletion(true);
+    await _navigationScreenSpeak(selectedLang == 'ar'
+        ? artxts['appFeatures']['مستند']
+        : entxts['appFeatures']['paper']);
 
     await _listenNow();
   }
@@ -68,7 +79,7 @@ class NavigationCubit extends Cubit<NavigationState> {
 
   void _navigatingService(String service) async {
     List<String> services = [
-      Services.cash.name,
+      Services.money.name,
       Services.object.name,
       Services.paper.name,
       Services.people.name,

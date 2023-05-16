@@ -1,20 +1,16 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:noor/cache_reco/screens/cash_screen.dart';
 import 'package:noor/face_detection/logic/face_cubit.dart';
 import 'package:noor/face_detection/logic/face_state.dart';
 import 'package:noor/main.dart';
 import 'package:noor/navigation/logic/lang_cubit.dart';
 import 'package:noor/navigation/logic/lang_state.dart';
-import 'package:noor/navigation/logic/navigation_cubit.dart';
-import 'package:noor/navigation/logic/navigation_state.dart';
 import 'package:noor/navigation/screens/homepage.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/shared/shared_theme/shared_fonts.dart';
 import 'package:noor/shared/shared_widgets/error_txt_widget.dart';
 import 'package:noor/users/logic/users_cubit.dart';
-import 'package:noor/users/screens/users_list.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -60,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: SharedColors.primaryColor, size: 25.0),
                 onPressed: () {
                   Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (_) => CashScreen()));
+                      context, MaterialPageRoute(builder: (_) => HomePage()));
                 },
               ),
               FloatingActionButton(

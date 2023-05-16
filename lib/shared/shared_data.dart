@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noor/cache_reco/screens/cash_screen.dart';
 import 'package:noor/navigation/logic/navigation_cubit.dart';
+import 'package:noor/newpro/vision_detector_views/detector_views.dart';
 import 'package:noor/object_detection/screens/object_screen.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/uber_screen.dart';
@@ -16,7 +17,7 @@ final Map<String, dynamic> entxts = {
   'chooseFeature': 'Which Feature do you want to choose?',
   'appFeatures': {
     'people': 'Say people for Trusted People Feature',
-    'cache': 'Say cache for Cache Recognition',
+    'money': 'Say money for Cache Recognition',
     'object': 'Say object for Object Detection',
     'uber': 'Say uber to Request a Ride',
     'paper': 'Say paper for Reading Docs',
@@ -34,9 +35,9 @@ final Map<String, dynamic> artxts = {
   'ourFeatures': 'خدماتنا هي',
   'chooseFeature': 'اي خدمه تريد؟',
   'appFeatures': {
-    'اشخاص': 'انطق كلمة اشخاص لاختيار خدمة الاشخخاص الموثوق بها',
+    'اشخاص': 'انطق كلمة اشخاص لاختيار خدمة الاشخاص الموثوق بها',
     'نقود': 'انطق كلمة نقود لاختيار خدمة للتعرف على النقود',
-    'اغراض': 'انطق كلمة اغراض لاختيار خدمة التعرف على الاشياء',
+    'اغراض': 'انطق كلمة أغراض لاختيار خدمة التعرف على الاشياء',
     'اوبر': 'انطق كلمة اوبر لطلب رحلة',
     'مستند': 'انطق كلمة مستند لقرائة المستندات',
   },
@@ -51,7 +52,7 @@ Map<String, Map<String, dynamic>> categoryData = {
     'color': SharedColors.primaryColor,
     'screen': TrustedUsersList()
   },
-  Services.cash.name: {
+  Services.money.name: {
     'icon': 'assets/icons/cache.png',
     'color': SharedColors.secondaryColor,
     'screen': CashScreen()
@@ -69,6 +70,6 @@ Map<String, Map<String, dynamic>> categoryData = {
   Services.paper.name: {
     'icon': 'assets/icons/voice.png',
     'color': Colors.blueAccent,
-    'screen': TrustedUsersList()
+    'screen': ReadDocs()
   },
 };
