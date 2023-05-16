@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:noor/main.dart';
-import 'package:noor/shared/shared_data.dart';
 import 'package:noor/users/logic/user_state.dart';
 import 'dart:io';
 
@@ -24,4 +23,22 @@ class UserCubit extends Cubit<UserState> {
   void _loginScreenSpeak(String txt) async {
     await voiceController.speak(txt);
   }
+
+  // Future<void> login() async {}
+
+  // Future<void> register() async {}
+
+  // Future<void> _saveToLocal() async {}
+
+  // Future<void> _getFromLocal() async {}
+
+  // Future<void> _takePicture() async {}
+
+  // Future<bool> _verifyPeople() async {}
+
+  // Future<String> _getUserName() async {}
+
+  // Future<void> getTrustedPeople() async {}
+
+  // Future<void> deleteTrustedPeople() async {}
 }

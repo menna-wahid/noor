@@ -7,6 +7,7 @@ import 'package:noor/main.dart';
 import 'package:noor/navigation/logic/lang_cubit.dart';
 import 'package:noor/navigation/logic/lang_state.dart';
 import 'package:noor/navigation/screens/homepage.dart';
+import 'package:noor/newpro/vision_detector_views/detector_views.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/shared/shared_theme/shared_fonts.dart';
 import 'package:noor/shared/shared_widgets/error_txt_widget.dart';
@@ -55,8 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Icon(Icons.people,
                     color: SharedColors.primaryColor, size: 25.0),
                 onPressed: () {
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (_) => HomePage()));
+                  // add replacement
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => FaceDetectorView()));
                 },
               ),
               FloatingActionButton(

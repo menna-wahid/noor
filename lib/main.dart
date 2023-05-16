@@ -57,7 +57,6 @@ class _MyAppState extends State<MyApp> {
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: LoginScreen(),
-        // home: Home(),
       ),
     );
   }

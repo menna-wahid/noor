@@ -52,6 +52,7 @@ dependencies:
   google_mlkit_translation:
   google_mlkit_smart_reply:
   tflite: ^1.1.2
+  sqflite: ^2.2.8+3
 
 
   # The following adds the Cupertino Icons font to your application.

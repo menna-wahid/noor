@@ -22,30 +22,30 @@ class NavigationCubit extends Cubit<NavigationState> {
     String txt =
         '${selectedLang == 'ar' ? 'اليوم هو' : 'Today is'} $date ${selectedLang == 'ar' ? 'والساعه هي' : 'and Time is'} $time ${selectedLang == 'ar' ? 'و' : 'and'} ${selectedVoicLang['ourFeatures']}}';
 
-    await _navigationScreenSpeak(
-        selectedLang == 'ar' ? artxts['wlcMsg'] : entxts['wlcMsg']);
-    await voiceController.tts.awaitSpeakCompletion(true);
-    await _navigationScreenSpeak(txt);
-    await voiceController.tts.awaitSpeakCompletion(true);
-    await _navigationScreenSpeak(selectedLang == 'ar'
-        ? artxts['appFeatures']['اشخاص']
-        : entxts['appFeatures']['people']);
-    await voiceController.tts.awaitSpeakCompletion(true);
-    await _navigationScreenSpeak(selectedLang == 'ar'
-        ? artxts['appFeatures']['نقود']
-        : entxts['appFeatures']['money']);
-    await voiceController.tts.awaitSpeakCompletion(true);
-    await _navigationScreenSpeak(selectedLang == 'ar'
-        ? artxts['appFeatures']['اغراض']
-        : entxts['appFeatures']['object']);
-    await voiceController.tts.awaitSpeakCompletion(true);
-    await _navigationScreenSpeak(selectedLang == 'ar'
-        ? artxts['appFeatures']['اوبر']
-        : entxts['appFeatures']['uber']);
-    await voiceController.tts.awaitSpeakCompletion(true);
-    await _navigationScreenSpeak(selectedLang == 'ar'
-        ? artxts['appFeatures']['مستند']
-        : entxts['appFeatures']['paper']);
+    // await _navigationScreenSpeak(
+    //     selectedLang == 'ar' ? artxts['wlcMsg'] : entxts['wlcMsg']);
+    // await voiceController.tts.awaitSpeakCompletion(true);
+    // await _navigationScreenSpeak(txt);
+    // await voiceController.tts.awaitSpeakCompletion(true);
+    // await _navigationScreenSpeak(selectedLang == 'ar'
+    //     ? artxts['appFeatures']['اشخاص']
+    //     : entxts['appFeatures']['people']);
+    // await voiceController.tts.awaitSpeakCompletion(true);
+    // await _navigationScreenSpeak(selectedLang == 'ar'
+    //     ? artxts['appFeatures']['نقود']
+    //     : entxts['appFeatures']['money']);
+    // await voiceController.tts.awaitSpeakCompletion(true);
+    // await _navigationScreenSpeak(selectedLang == 'ar'
+    //     ? artxts['appFeatures']['اغراض']
+    //     : entxts['appFeatures']['object']);
+    // await voiceController.tts.awaitSpeakCompletion(true);
+    // await _navigationScreenSpeak(selectedLang == 'ar'
+    //     ? artxts['appFeatures']['اوبر']
+    //     : entxts['appFeatures']['uber']);
+    // await voiceController.tts.awaitSpeakCompletion(true);
+    // await _navigationScreenSpeak(selectedLang == 'ar'
+    //     ? artxts['appFeatures']['مستند']
+    //     : entxts['appFeatures']['paper']);
 
     await _listenNow();
   }

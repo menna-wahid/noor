@@ -68,9 +68,9 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
           inputImage.inputImageData!.size,
           inputImage.inputImageData!.imageRotation);
       _customPaint = CustomPaint(painter: painter);
-      // if (faces.isNotEmpty) {
-      //   print('Face =========> ${faces[0]}');
-      // }
+      if (faces.isNotEmpty) {
+        print('Face =========> ${faces[0]}');
+      }
     } else {
       String text = 'Faces found: ${faces.length}\n\n';
       for (final face in faces) {

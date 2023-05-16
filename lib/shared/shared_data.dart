@@ -51,6 +51,7 @@ Map<String, Map<String, dynamic>> categoryData = {
     'icon': 'assets/icons/face.png',
     'color': SharedColors.primaryColor,
     'screen': TrustedUsersList()
+    // 'screen': FaceDetectorView()
   },
   Services.money.name: {
     'icon': 'assets/icons/cache.png',
