@@ -8,8 +8,10 @@ import 'package:noor/uber_screen.dart';
 import 'package:noor/users/screens/users_list.dart';
 
 final Map<String, dynamic> entxts = {
-  'loginWelcomeMsg':
-      'Welcome to Noor App, Put the camera front of your face to login',
+  'login': 'Login',
+  'register': 'Register',
+  'splashScreenWlcMsg': 'Welcome to Noor App, Say Login or Register',
+  'loginWelcomeMsg': 'Let\'s Login, Put the camera front of your face to login',
   'loginSuccessMsg': '',
   'loginErrorMsg': '',
   'wlcMsg': 'Welcome',
@@ -28,7 +30,11 @@ final Map<String, dynamic> entxts = {
 };
 
 final Map<String, dynamic> artxts = {
-  'loginWelcomeMsg': 'مرحبا في تطبيق نور، ضع الكاميرا امام وجهك لتسجيل الدخول',
+  'login': 'تسجيل دخول',
+  'register': 'تسجيل جديد',
+  'splashScreenWlcMsg':
+      'مرحبا بك في تطبيق نور، انطق كلمة تسجيل دخول او كلمة تسجيل حساب جديد',
+  'loginWelcomeMsg': 'مرحبا ضع الكاميرا امام وجهك لتسجيل الدخول',
   'loginSuccessMsg': '',
   'loginErrorMsg': '',
   'wlcMsg': 'مرحبا',
