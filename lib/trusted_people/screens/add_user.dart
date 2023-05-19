@@ -4,6 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/shared/shared_theme/shared_fonts.dart';
 import 'package:noor/shared/shared_widgets/field_widget.dart';
+import 'package:noor/trusted_people/logic/trusted_people_cubit.dart';
+import 'package:noor/trusted_people/logic/trusted_people_state.dart';
 import 'package:noor/users/logic/user_state.dart';
 import 'package:noor/users/logic/users_cubit.dart';
 
@@ -27,7 +29,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
         title: Text('Add new user', style: SharedFonts.primaryTxtStyle),
         iconTheme: IconThemeData(color: SharedColors.primaryColor, size: 25.0),
       ),
-      body: BlocBuilder<UserCubit, UserState>(
+      body: BlocBuilder<TrustedPeopleCubit, TrustedPeopleState>(
         builder: (context, state) {
           return Container(
             margin: EdgeInsets.all(10.0),
@@ -73,9 +75,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(20.0))),
                                       onPressed: () {
-                                        BlocProvider.of<UserCubit>(context)
-                                            .openCameraImagePicker(
-                                                ImageSource.camera);
+                                        // BlocProvider.of<UserCubit>(context)
+                                        //     .openCameraImagePicker(
+                                        //         ImageSource.camera);
                                       },
                                     ),
                                     TextButton(
@@ -90,9 +92,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(20.0))),
                                       onPressed: () {
-                                        BlocProvider.of<UserCubit>(context)
-                                            .openCameraImagePicker(
-                                                ImageSource.gallery);
+                                        // BlocProvider.of<UserCubit>(context)
+                                        //     .openCameraImagePicker(
+                                        //         ImageSource.gallery);
                                       },
                                     ),
                                   ],

@@ -1,12 +1,10 @@
 import 'dart:io';
-
+import 'package:noor/splash_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:noor/secondmain.dart';
-import 'package:noor/users/screens/login_screen.dart';
 
 enum ScreenMode { liveFeed, gallery }
 

@@ -1,7 +1,20 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noor/main.dart';
+import 'package:noor/navigation/logic/lang_cubit.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/shared/shared_theme/shared_fonts.dart';
+import 'package:noor/users/logic/user_state.dart';
+import 'package:noor/users/logic/users_cubit.dart';
+
+List<CameraDescription> cameras = [];
+
+Future<void> newmain() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
+}
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,6 +24,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  @override
+  void initState() {
+    newmain();
+    BlocProvider.of<UserCubit>(context).initSplashScreen();
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,48 +41,62 @@ class _SplashScreenState extends State<SplashScreen> {
         elevation: 0.0,
         title: Text('Wlc! Let\'s Start', style: SharedFonts.primaryTxtStyle),
       ),
-      body: Container(
-        margin: EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 3,
-              width: MediaQuery.of(context).size.width / 1.5,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/icons/wlc.jpg'),
-                      fit: BoxFit.fill)),
-            ),
-            TextButton(
-              child: Text(
-                selectedVoicLang['login'],
-                style: SharedFonts.whiteTxtStyle,
-              ),
-              style: TextButton.styleFrom(
-                  backgroundColor: SharedColors.primaryColor,
-                  elevation: 0.0,
-                  fixedSize: Size(50.0, 200.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0))),
-              onPressed: () {},
-            ),
-            TextButton(
-              child: Text(
-                selectedVoicLang['register'],
-                style: SharedFonts.whiteTxtStyle,
-              ),
-              style: TextButton.styleFrom(
-                  backgroundColor: SharedColors.primaryColor,
-                  elevation: 0.0,
-                  fixedSize: Size(50.0, 200.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0))),
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
+      floatingActionButton: FloatingActionButton(
+            heroTag: 'fab2',
+            backgroundColor: SharedColors.secondaryColor,
+            child: Text(selectedLang, style: SharedFonts.primaryTxtStyle),
+            onPressed: () {
+              BlocProvider.of<LangCubit>(context).changeLang();
+            }),
+      body: BlocBuilder<UserCubit, UserState>(
+        builder: (context, state) {
+          if (state is SplashScreenNavigationState) {
+            return state.screen;
+          } else {
+            return Container(
+                margin: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height / 3,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/icons/wlc.jpg'),
+                              fit: BoxFit.fill)),
+                    ),
+                    TextButton(
+                      child: Text(
+                        selectedVoicLang['login'],
+                        style: SharedFonts.whiteTxtStyle,
+                      ),
+                      style: TextButton.styleFrom(
+                          backgroundColor: SharedColors.primaryColor,
+                          elevation: 0.0,
+                          fixedSize: Size(200.0, 50.0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0))),
+                      onPressed: () {},
+                    ),
+                    TextButton(
+                      child: Text(
+                        selectedVoicLang['register'],
+                        style: SharedFonts.whiteTxtStyle,
+                      ),
+                      style: TextButton.styleFrom(
+                          backgroundColor: SharedColors.primaryColor,
+                          elevation: 0.0,
+                          fixedSize: Size(200.0, 50.0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0))),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+            );
+          }
+        },
+      )
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:noor/face_app/locator.dart';
 import 'package:noor/face_app/pages/db/databse_helper.dart';
 import 'package:noor/face_app/pages/models/user.model.dart';
 import 'package:noor/face_app/pages/profile.dart';
@@ -6,6 +5,7 @@ import 'package:noor/face_app/pages/widgets/app_button.dart';
 import 'package:noor/face_app/services/camera.service.dart';
 import 'package:noor/face_app/services/ml_service.dart';
 import 'package:flutter/material.dart';
+import 'package:noor/main.dart';
 import '../home.dart';
 import 'app_text_field.dart';
 
@@ -23,8 +23,8 @@ class AuthActionButton extends StatefulWidget {
 }
 
 class _AuthActionButtonState extends State<AuthActionButton> {
-  final MLService _mlService = locator<MLService>();
-  final CameraService _cameraService = locator<CameraService>();
+  final MLService _mlService = mlService!;
+  final CameraService _cameraService = cameraService!;
 
   final TextEditingController _userTextEditingController =
       TextEditingController(text: '');

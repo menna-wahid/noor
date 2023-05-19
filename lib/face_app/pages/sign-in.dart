@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:noor/face_app/locator.dart';
 import 'package:noor/face_app/pages/models/user.model.dart';
 import 'package:noor/face_app/pages/widgets/auth_button.dart';
 import 'package:noor/face_app/pages/widgets/camera_detection_preview.dart';
@@ -11,6 +10,7 @@ import 'package:noor/face_app/services/ml_service.dart';
 import 'package:noor/face_app/services/face_detector_service.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:noor/main.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -20,9 +20,9 @@ class SignIn extends StatefulWidget {
 }
 
 class SignInState extends State<SignIn> {
-  CameraService _cameraService = locator<CameraService>();
-  FaceDetectorService _faceDetectorService = locator<FaceDetectorService>();
-  MLService _mlService = locator<MLService>();
+  CameraService _cameraService = cameraService!;
+  FaceDetectorService _faceDetectorService = faceDetectorService!;
+  MLService _mlService = mlService!;
 
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 

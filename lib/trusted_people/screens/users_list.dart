@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/shared/shared_theme/shared_fonts.dart';
-import 'package:noor/users/screens/add_user.dart';
+import 'package:noor/trusted_people/screens/add_user.dart';
 
 class TrustedUsersList extends StatefulWidget {
   const TrustedUsersList({super.key});

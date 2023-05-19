@@ -5,15 +5,24 @@ import 'package:noor/newpro/vision_detector_views/detector_views.dart';
 import 'package:noor/object_detection/screens/object_screen.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/uber_screen.dart';
-import 'package:noor/users/screens/users_list.dart';
+import 'package:noor/trusted_people/screens/users_list.dart';
 
 final Map<String, dynamic> entxts = {
+  'toGoBack' : 'To Go Back ',
+  'youAreNowBack' : 'You are now in home page',
+  'silent' : 'Not Hear well, Speak again',
   'login': 'Login',
   'register': 'Register',
-  'splashScreenWlcMsg': 'Welcome to Noor App, Say Login or Register',
+  'splashScreenWlcMsg': 'Welcome to Noor App,',
+  'splashScreenWlcMsg2': 'Say Login or Register',
   'loginWelcomeMsg': 'Let\'s Login, Put the camera front of your face to login',
-  'loginSuccessMsg': '',
-  'loginErrorMsg': '',
+  'registerWelcomeMsg': 'Let\'s Register, Put the camera front of your face to Register',
+  'registerSayUrNameMsg' : 'Say your Name to complete Registration Process',
+  'loginSuccessMsg': 'Succefully Logged In',
+  'loginErrorMsg': 'Invalid Creditenl Try Again',
+  'registerSuccessMsg': 'Succefully Registerd',
+  'registerErrorMsg': 'Invalid Creditenl Try Again',
+  'notAPerson' : 'Captured Picture not for a human, please put the camera front of your face',
   'wlcMsg': 'Welcome',
   'ourFeatures': 'Our Featrures are',
   'chooseFeature': 'Which Feature do you want to choose?',
@@ -30,13 +39,22 @@ final Map<String, dynamic> entxts = {
 };
 
 final Map<String, dynamic> artxts = {
+  'toGoBack' : 'للرجوع للقائمه الرئيسية  ',
+  'youAreNowBack' : 'انت الان في القائمه الرئيسية',
+  'silent' : 'لا استطيع سماعك، الرجاء التحدث بوضوح',
   'login': 'تسجيل دخول',
   'register': 'تسجيل جديد',
   'splashScreenWlcMsg':
-      'مرحبا بك في تطبيق نور، انطق كلمة تسجيل دخول او كلمة تسجيل حساب جديد',
+      'مرحبا بك في تطبيق نور',
+  'splashScreenWlcMsg2': 'انطق تسجيل دخول او إنشاء حساب جديد',
   'loginWelcomeMsg': 'مرحبا ضع الكاميرا امام وجهك لتسجيل الدخول',
-  'loginSuccessMsg': '',
-  'loginErrorMsg': '',
+  'registerWelcomeMsg': 'مرحبا ضع الكامير امام وجهك لتسجيل حساب جديد',
+  'registerSayUrNameMsg' : 'ما هو اسمك لإستكمال تسجيل الحساب',
+  'loginSuccessMsg': 'تم تسجيل الدخو لبنجاح',
+  'loginErrorMsg': 'تعذر تسجيل الدخول',
+  'registerSuccessMsg': 'تم تسجيل حساب جديد بنجاح',
+  'registerErrorMsg': 'تعذر تسجيل حساب جديد',
+  'notAPerson' : 'الصورة المأخوذة ليست لإنسان الرجاء وضع الكاميرا اما وجهك بصورة صحيحة',
   'wlcMsg': 'مرحبا',
   'ourFeatures': 'خدماتنا هي',
   'chooseFeature': 'اي خدمه تريد؟',

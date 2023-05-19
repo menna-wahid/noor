@@ -1,4 +1,3 @@
-import 'package:noor/face_app/locator.dart';
 import 'package:noor/face_app/pages/db/databse_helper.dart';
 import 'package:noor/face_app/pages/sign-in.dart';
 import 'package:noor/face_app/pages/sign-up.dart';
@@ -6,6 +5,7 @@ import 'package:noor/face_app/services/camera.service.dart';
 import 'package:noor/face_app/services/ml_service.dart';
 import 'package:noor/face_app/services/face_detector_service.dart';
 import 'package:flutter/material.dart';
+import 'package:noor/main.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -14,9 +14,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  MLService _mlService = locator<MLService>();
-  FaceDetectorService _mlKitService = locator<FaceDetectorService>();
-  CameraService _cameraService = locator<CameraService>();
+  MLService _mlService = mlService!;
+  FaceDetectorService _mlKitService = faceDetectorService!;
+  CameraService _cameraService = cameraService!;
   bool loading = false;
 
   @override

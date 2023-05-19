@@ -66,6 +66,11 @@ class NavigationCubit extends Cubit<NavigationState> {
     await voiceController.speak(txt);
   }
 
+  Future youAreBackNavigation() async {
+    await _navigationScreenSpeak(selectedVoicLang['youAreNowBack']);
+    await _listenNow();
+  }
+
   Future errorScreenSpeak() async {
     await _navigationScreenSpeak(selectedVoicLang['errorMsg']);
   }

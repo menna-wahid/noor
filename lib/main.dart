@@ -2,21 +2,34 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:noor/face_detection/logic/face_cubit.dart';
+import 'package:noor/face_app/services/camera.service.dart';
+import 'package:noor/face_app/services/face_detector_service.dart';
+import 'package:noor/face_app/services/ml_service.dart';
 import 'package:noor/navigation/logic/lang_cubit.dart';
 import 'package:noor/navigation/logic/navigation_cubit.dart';
 import 'package:noor/shared/shared_data.dart';
 import 'package:noor/splash_screen.dart';
+import 'package:noor/trusted_people/logic/trusted_people_cubit.dart';
 import 'package:noor/users/logic/users_cubit.dart';
 import 'package:noor/voice_assist/logic/voice_controller.dart';
 
 String selectedLang = 'en';
 Map selectedVoicLang = {};
 List<CameraDescription> cameras = [];
+CameraService? cameraService;
+FaceDetectorService? faceDetectorService;
+MLService? mlService;
+
+init() {
+  cameraService = CameraService();
+  faceDetectorService = FaceDetectorService();
+  mlService = MLService();
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
+  init();
   runApp(MyApp());
 }
 
@@ -44,10 +57,10 @@ class _MyAppState extends State<MyApp> {
           create: (context) => NavigationCubit(),
         ),
         BlocProvider(
-          create: (context) => FaceCubit(),
+          create: (context) => UserCubit(),
         ),
         BlocProvider(
-          create: (context) => UserCubit(),
+          create: (context) => TrustedPeopleCubit(),
         ),
         BlocProvider(
           create: (context) => LangCubit(),

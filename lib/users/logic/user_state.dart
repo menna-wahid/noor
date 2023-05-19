@@ -1,36 +1,48 @@
-import 'dart:io';
+import 'package:flutter/material.dart';
 
 abstract class UserState {}
 
 class UserInitState extends UserState {}
 
-class UserAddImgSuccessState extends UserState {
-  File? img;
-  UserAddImgSuccessState(this.img);
+class SplashNavigationState extends UserState {
+  Widget screen;
+  SplashNavigationState(this.screen);
 }
 
-class UserAddImgErrState extends UserState {}
+class LoginInitState extends UserState {}
 
-class LoginSuccessState extends UserState {}
+class RegisterInitState extends UserState {}
 
-class LoginFailedState extends UserState {}
+class SplashScreenNavigationState extends UserState {
+  Widget screen;
+  SplashScreenNavigationState(this.screen);
+}
 
-class NotPersonInImgState extends UserState {}
+/* 
 
-class AskAboutNameState extends UserState {}
+  - you are now back function
+  - if you want to go back function in each screen
 
-class AddTrustedPeopleState extends UserState {}
 
-class TrustedPeopleAddedSucessState extends UserState {}
+  - initLogin
+    cameraController
+      correctPerson
+      notAPerson
+    sucessLogin
+    invalidLogin
 
-class TrustedPeopleAddedFailedState extends UserState {}
 
-class VerifiedTrustedPeopleState extends UserState {}
+  - initRegister
+    cameraController
+      correctPerson
+      notAPerson
+    sayYourName
+      isThisYourName
+        if yes
+        register
+        if no 
+        reSayYourName
 
-class NotVerifiedPeopleState extends UserState {}
 
-class VerifiedPeopleState extends UserState {}
 
-class DeleteTrustedPeopleSuccessState extends UserState {}
-
-class DeleteTrustedPeopleFailedState extends UserState {}
+*/

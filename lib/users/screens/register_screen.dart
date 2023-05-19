@@ -5,32 +5,30 @@ import 'package:noor/main.dart';
 import 'package:noor/navigation/logic/lang_cubit.dart';
 import 'package:noor/navigation/logic/lang_state.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
+import 'package:noor/users/logic/face_utils.dart';
 import 'package:noor/users/logic/user_state.dart';
 import 'package:noor/users/logic/users_cubit.dart';
-import 'package:noor/users/logic/face_utils.dart';
 
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<UserCubit>(context).initLoginScreen();
+    BlocProvider.of<UserCubit>(context).initRegisterScreen();
     super.initState();
   }
 
   @override
   void dispose() {
-    disposeServices();
+   disposeServices(); 
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LangCubit, LangState>(
@@ -39,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: SharedColors.backGroundColor,
           body: BlocBuilder<UserCubit, UserState>(builder: (context, state) {
             return Container(
-              child: CameraPreview(cameraService!.cameraController!)
+            child: CameraPreview(cameraService!.cameraController!)
             );
           }),
         );

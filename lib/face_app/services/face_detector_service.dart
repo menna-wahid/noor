@@ -1,12 +1,12 @@
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:noor/face_app/locator.dart';
 import 'package:noor/face_app/services/camera.service.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:noor/main.dart';
 
 class FaceDetectorService {
-  CameraService _cameraService = locator<CameraService>();
+  final CameraService _cameraService = cameraService!;
 
   late FaceDetector _faceDetector;
   FaceDetector get faceDetector => _faceDetector;

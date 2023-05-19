@@ -1,16 +1,15 @@
 import 'package:camera/camera.dart';
-import 'package:noor/face_app/locator.dart';
 import 'package:noor/face_app/pages/widgets/FacePainter.dart';
 import 'package:noor/face_app/services/camera.service.dart';
 import 'package:noor/face_app/services/face_detector_service.dart';
 import 'package:flutter/material.dart';
+import 'package:noor/main.dart';
 
 class CameraDetectionPreview extends StatelessWidget {
   CameraDetectionPreview({Key? key}) : super(key: key);
 
-  final CameraService _cameraService = locator<CameraService>();
-  final FaceDetectorService _faceDetectorService =
-      locator<FaceDetectorService>();
+  final CameraService _cameraService = cameraService!;
+  final FaceDetectorService _faceDetectorService = faceDetectorService!;
 
   @override
   Widget build(BuildContext context) {

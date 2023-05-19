@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
-import 'package:noor/face_app/locator.dart';
 import 'package:noor/face_app/pages/widgets/FacePainter.dart';
 import 'package:noor/face_app/pages/widgets/auth-action-button.dart';
 import 'package:noor/face_app/pages/widgets/camera_header.dart';
@@ -11,6 +10,7 @@ import 'package:noor/face_app/services/ml_service.dart';
 import 'package:noor/face_app/services/face_detector_service.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:noor/main.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -33,9 +33,9 @@ class SignUpState extends State<SignUp> {
   bool _bottomSheetVisible = false;
 
   // service injection
-  FaceDetectorService _faceDetectorService = locator<FaceDetectorService>();
-  CameraService _cameraService = locator<CameraService>();
-  MLService _mlService = locator<MLService>();
+  FaceDetectorService _faceDetectorService = faceDetectorService!;
+  CameraService _cameraService = cameraService!;
+  MLService _mlService = mlService!;
 
   @override
   void initState() {
