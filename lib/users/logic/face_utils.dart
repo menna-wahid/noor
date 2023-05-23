@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:noor/face_app/pages/models/user.model.dart';
+import 'package:noor/users/logic/user.model.dart';
 import 'package:noor/main.dart';
 
 
@@ -10,7 +10,7 @@ Future<void> initServices() async {
   await cameraService!.initialize();
 }
 
-void disposeServices() async {
+Future<void> disposeServices() async {
   cameraService!.dispose();
   faceDetectorService!.dispose();
   mlService!.dispose();
@@ -18,7 +18,6 @@ void disposeServices() async {
 
 
 Future<void> startPredicting() async {
-  cameraService!.initialize();
   await _frameFaces();
 }
 
@@ -41,7 +40,7 @@ Future<void> _predictFacesFromImage({@required CameraImage? image}) async {
   }
 }
 
-Future<bool> takePicture() async {
+Future<bool> detectFace() async {
   if (faceDetectorService!.faceDetected) {
     await cameraService!.takePicture();
     return true;
@@ -52,7 +51,7 @@ Future<bool> takePicture() async {
 
 
 Future<Map> authenticateUser() async {
-  await takePicture();
+  await detectFace();
   if (faceDetectorService!.faceDetected) {
     User? user = await mlService!.predict();
     return {

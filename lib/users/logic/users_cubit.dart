@@ -1,8 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noor/users/logic/user.model.dart';
 import 'package:noor/main.dart';
 import 'package:noor/users/logic/user_state.dart';
-import 'package:noor/users/logic/face_utils.dart';
+import 'package:noor/users/logic/face_utils.dart' as face_utils;
 import 'package:noor/users/screens/login_screen.dart';
 import 'package:noor/users/screens/register_screen.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
@@ -19,7 +20,7 @@ class UserCubit extends Cubit<UserState> {
   late List<CameraDescription> cameras;
 
   void initSplashScreen() async {
-    await initServices();
+    await face_utils.initServices();
     await _loginScreenSpeak(selectedVoicLang['splashScreenWlcMsg']!);
     await _listenNowNavigation();
   }
@@ -66,9 +67,18 @@ class UserCubit extends Cubit<UserState> {
   /// login screen ///
 
   void initLoginScreen() async {
-    await initServices();
+    await cameraService!.initialize();
     await _loginScreenSpeak(selectedVoicLang['loginWelcomeMsg']!);
-    
+    await face_utils.startPredicting();
+  }
+
+
+  Future<void> loginScenario() async {
+    String auth = await _authenticate();
+    await _loginScreenSpeak(selectedVoicLang[auth]);
+    if (auth == 'notAPerson' || auth == 'loginErrorMsg') {
+      await loginScenario();
+    }
   }
 
 
@@ -83,9 +93,59 @@ class UserCubit extends Cubit<UserState> {
   /// register screen ///
 
   void initRegisterScreen() async {
-    await initServices();
+    await face_utils.initServices();
     await _loginScreenSpeak(selectedVoicLang['registerWelcomeMsg']!);
+    await face_utils.startPredicting();
   }
+
+  
+  Future<void> registerScenario() async {
+    bool isImg = await _registerPic();
+    if (!isImg) {
+      return;
+    }
+    // _updateRegisterSteps(RegisterNameStepState());
+    // bool isName = await _registerName();
+    // if (!isName) {
+    //   return;
+    // }
+    // _updateRegisterSteps(RegisterLoadingState());
+
+    // bool isSaved = await _registerUserLocal();
+    // if(!isSaved) {
+    //   _updateRegisterSteps(RegisterErrorState());
+    //   return;
+    // }
+    // _updateRegisterSteps(RegisterSuccessState());
+  }
+
+  void _updateRegisterSteps(UserState updatedState) {
+    emit(updatedState);
+  }
+
+
+  Future<bool> _registerPic() async {
+    bool _pic = await face_utils.detectFace();
+    if (!_pic) {
+      await _loginScreenSpeak(selectedVoicLang['notAPerson']);
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> _registerName() async {
+    // sayName Speak
+    // listenToName
+    // isThisYourName Speak
+    // listenToYesOrName
+    // if yes done else repeat
+    return false;
+  }
+
+  Future<bool> _registerUserLocal() async {
+    return false;
+  }
+
 
   Future<void> _successRegisterSpeak() async {
     await _loginScreenSpeak(selectedVoicLang['registerSuccessMsg']);
@@ -116,5 +176,20 @@ class UserCubit extends Cubit<UserState> {
       },
       listenFor: Duration(seconds: 4),
     );
+  }
+
+  Future<String> _authenticate() async {
+    bool _pic = await face_utils.detectFace();
+    if (!_pic) {
+      return 'notAPerson';
+    }
+    
+    User? user = await mlService!.predict();
+    
+    if (user == null) {
+      return 'loginErrorMsg';
+    } else {
+      return 'loginSuccessMsg';
+    }
   }
 }

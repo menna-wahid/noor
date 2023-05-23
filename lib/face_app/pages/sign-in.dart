@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:noor/face_app/pages/models/user.model.dart';
+import 'package:noor/users/logic/user.model.dart';
 import 'package:noor/face_app/pages/widgets/auth_button.dart';
 import 'package:noor/face_app/pages/widgets/camera_detection_preview.dart';
 import 'package:noor/face_app/pages/widgets/camera_header.dart';

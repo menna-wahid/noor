@@ -11,7 +11,21 @@ class SplashNavigationState extends UserState {
 
 class LoginInitState extends UserState {}
 
+class LoginSuccessState extends UserState {}
+
+class LoginFailedState extends UserState {}
+
 class RegisterInitState extends UserState {}
+
+class RegisterImgStepState extends UserState {}
+
+class RegisterNameStepState extends UserState {}
+
+class RegisterLoadingState extends UserState {}
+
+class RegisterSuccessState extends UserState {}
+
+class RegisterErrorState extends UserState {}
 
 class SplashScreenNavigationState extends UserState {
   Widget screen;
@@ -19,6 +33,21 @@ class SplashScreenNavigationState extends UserState {
 }
 
 /* 
+
+  - initServices
+  - disposeServices
+  - predicting
+    - frameFaces
+    - imageStream
+    - predictFaceFromImage
+      - detectFaceFromImage
+      - setCurrentPrediction
+  - detectFace
+  - takePicture
+  - authenticate
+    - mlServices.predict
+
+    
 
   - you are now back function
   - if you want to go back function in each screen

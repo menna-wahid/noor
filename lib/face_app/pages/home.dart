@@ -1,4 +1,4 @@
-import 'package:noor/face_app/pages/db/databse_helper.dart';
+import 'package:noor/trusted_people/logic/databse_helper.dart';
 import 'package:noor/face_app/pages/sign-in.dart';
 import 'package:noor/face_app/pages/sign-up.dart';
 import 'package:noor/face_app/services/camera.service.dart';

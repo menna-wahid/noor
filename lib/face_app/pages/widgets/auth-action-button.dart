@@ -1,5 +1,5 @@
-import 'package:noor/face_app/pages/db/databse_helper.dart';
-import 'package:noor/face_app/pages/models/user.model.dart';
+import 'package:noor/trusted_people/logic/databse_helper.dart';
+import 'package:noor/users/logic/user.model.dart';
 import 'package:noor/face_app/pages/profile.dart';
 import 'package:noor/face_app/pages/widgets/app_button.dart';
 import 'package:noor/face_app/services/camera.service.dart';
