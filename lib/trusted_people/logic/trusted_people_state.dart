@@ -1,12 +1,13 @@
 
 
-import 'dart:io';
-
 abstract class TrustedPeopleState {}
 
 class TrustedPeopleInitState extends TrustedPeopleState {}
 
-class UserAddImgSuccessState extends TrustedPeopleState {
-  File? img;
-  UserAddImgSuccessState(this.img);
-}
+class AddTrustedPeopleNavigationState extends TrustedPeopleState {}
+
+class BackPeopleInitState extends TrustedPeopleState {}
+
+class AddPeopleShowNameState extends TrustedPeopleState {}
+
+class AddPeopleNameDoneState extends TrustedPeopleState {}

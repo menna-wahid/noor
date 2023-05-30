@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noor/main.dart';
 import 'package:noor/navigation/logic/navigation_state.dart';
+import 'package:noor/navigation/screens/homepage.dart';
 import 'package:noor/shared/shared_data.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 
@@ -8,8 +9,6 @@ enum Services { home, people, money, object, uber, paper }
 
 class NavigationCubit extends Cubit<NavigationState> {
   NavigationCubit() : super(InitNavigationState());
-
-  Services selectedService = Services.home;
 
   void errorNavigationSpeak() async {
     await _navigationScreenSpeak(selectedVoicLang['errorMsg']);

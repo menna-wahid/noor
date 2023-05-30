@@ -59,6 +59,7 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     } else if (state is ScreenNavigationState) {
+      // Navigator.push(context, MaterialPageRoute(builder: (_) => state.screen));
       return state.screen;
     } else {
       return Center(

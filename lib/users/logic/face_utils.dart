@@ -1,13 +1,21 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:noor/users/logic/user.model.dart';
-import 'package:noor/main.dart';
+import 'package:noor/face_app/services/camera.service.dart';
+import 'package:noor/face_app/services/face_detector_service.dart';
+import 'package:noor/face_app/services/ml_service.dart';
 
+CameraService? cameraService;
+FaceDetectorService? faceDetectorService;
+MLService? mlService;
 
+// use it only once for initialization services
 Future<void> initServices() async {
+  cameraService = CameraService();
+  faceDetectorService = FaceDetectorService();
+  mlService = MLService();
+  await cameraService!.initialize();
   await mlService!.initialize();
   faceDetectorService!.initialize();
-  await cameraService!.initialize();
 }
 
 Future<void> disposeServices() async {
@@ -46,22 +54,5 @@ Future<bool> detectFace() async {
     return true;
   } else {
     return false;
-  }
-}
-
-
-Future<Map> authenticateUser() async {
-  await detectFace();
-  if (faceDetectorService!.faceDetected) {
-    User? user = await mlService!.predict();
-    return {
-      'isAuth' : true,
-      'user' : user
-    };
-  } else {
-    return {
-      'isAuth' : false,
-      'user' : ''
-    }; 
   }
 }

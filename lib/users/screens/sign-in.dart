@@ -1,16 +1,13 @@
 import 'dart:async';
+import 'package:noor/face_app/single_picture.dart';
+import 'package:noor/users/logic/face_utils.dart';
 import 'package:noor/users/logic/user.model.dart';
-import 'package:noor/face_app/pages/widgets/auth_button.dart';
-import 'package:noor/face_app/pages/widgets/camera_detection_preview.dart';
-import 'package:noor/face_app/pages/widgets/camera_header.dart';
-import 'package:noor/face_app/pages/widgets/signin_form.dart';
-import 'package:noor/face_app/pages/widgets/single_picture.dart';
+import 'package:noor/face_app/camera_detection_preview.dart';
 import 'package:noor/face_app/services/camera.service.dart';
 import 'package:noor/face_app/services/ml_service.dart';
 import 'package:noor/face_app/services/face_detector_service.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:noor/main.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -110,29 +107,24 @@ class SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    Widget header = CameraHeader("LOGIN", onBackPressed: _onBackPressed);
     Widget body = getBodyWidget();
-    Widget? fab;
-    if (!_isPictureTaken) fab = AuthButton(onTap: onTap);
 
     return Scaffold(
       key: scaffoldKey,
-      body: Stack(
-        children: [body, header],
+      body: InkWell(
+        onTap: () {},
+        child: body,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: fab,
     );
   }
 
-  signInSheet({@required User? user}) => user == null
-      ? Container(
+  signInSheet({@required User? user}) =>
+      Container(
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.all(20),
           child: Text(
-            'User not found 😞',
+            user == null ? 'User not found 😞' : '${user.password}',
             style: TextStyle(fontSize: 20),
           ),
-        )
-      : SignInSheet(user: user);
+        );
 }

@@ -107,7 +107,8 @@ class MLService {
   Future<User?> _searchResult(List predictedData) async {
     DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
-    List<User> users = await _dbHelper.queryAllUsers();
+    // List<User> users = await _dbHelper.queryAllUsers();
+    List<User> users = [];
     double minDist = 999;
     double currDist = 0.0;
     User? predictedResult;

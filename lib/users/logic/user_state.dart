@@ -74,4 +74,23 @@ class SplashScreenNavigationState extends UserState {
 
 
 
+  His Scenario =>
+    (Done) 1- assign services new variables to global values
+          these variables are local to current state
+    2- start method wich doing => 
+          (Done) - initiate loading spinner
+          (Done) - initiate camera services
+          - excute _frameFaces which doing =>
+                - startingImageStream
+                - _predictingFaceFromCapturedImage which doing =>
+                      - detectingFaceFromImage
+                      - verify if faceDetected
+    3- onTap =>
+        - takePicture
+        - verify i faceDetected
+            - predict
+                return User
+                or
+                return None
+
 */

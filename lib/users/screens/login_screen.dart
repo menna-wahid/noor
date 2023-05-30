@@ -1,12 +1,11 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:noor/face_app/pages/widgets/FacePainter.dart';
-import 'package:noor/main.dart';
+import 'package:noor/face_app/FacePainter.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/users/logic/user_state.dart';
 import 'package:noor/users/logic/users_cubit.dart';
-import 'package:noor/users/logic/face_utils.dart';
+import 'package:noor/users/logic/face_utils.dart' as face_utils;
 
 
 class LoginScreen extends StatefulWidget {
@@ -26,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    disposeServices();
+    face_utils.disposeServices();
     super.dispose();
   }
 
@@ -36,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: SharedColors.backGroundColor,
       body: BlocBuilder<UserCubit, UserState>(builder: (context, state) {
+        UserCubit services = BlocProvider.of<UserCubit>(context);
         return InkWell(
           onDoubleTap: () {
             BlocProvider.of<UserCubit>(context).loginScenario();
@@ -51,16 +51,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     width: width,
                     height:
-                        width * cameraService!.cameraController!.value.aspectRatio,
+                        width * services.userCameraService!.cameraController!.value.aspectRatio,
                     child: Stack(
                       fit: StackFit.expand,
                       children: <Widget>[
-                        CameraPreview(cameraService!.cameraController!),
-                        if (faceDetectorService!.faceDetected)
+                        CameraPreview(services.userCameraService!.cameraController!),
+                        if (services.userFaceDetectorService!.faceDetected)
                           CustomPaint(
                             painter: FacePainter(
-                              face: faceDetectorService!.faces[0],
-                              imageSize: cameraService!.getImageSize(),
+                              face: services.userFaceDetectorService!.faces[0],
+                              imageSize: services.userCameraService!.getImageSize(),
                             ),
                           )
                       ],

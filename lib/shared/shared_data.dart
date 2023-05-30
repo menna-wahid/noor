@@ -35,7 +35,25 @@ final Map<String, dynamic> entxts = {
   },
   'errorMsg': 'Not Understand Speak Again',
   'scanObjectMsg': 'Now Object Scanning Ready',
-  'openPeopleScreenMsg': ''
+  'trustedPeopleWlcMsg': 'Welcome to Trusted Feature',
+  'trustedPeopleFeature' : {
+    'trusted' : 'Say Trusted to listen to your trusted people',
+    'people' : 'Say People to add a new trusted people',
+    'verify' : 'Say Verify to verify trusted people'
+  },
+  'gettingUsersList' : 'Fetching Your Trusted Users',
+  'yourTrustedUsersAre' : 'Your Trusted People Are',
+  'noTrustedPeopleFound' : 'There is no Trusted People in your list',
+  'addPeopleInitMsg' : 'To Add New People you have 2 steps',
+  'putCamera' : 'Put the Camera Front of Person face',
+  'sayHisName' : 'Now Say this person Name',
+  'successAdded' : 'Succefully Added',
+  'errorAdd' : 'Error Add this Person try again',
+  'proccessCancelled' : 'Sorry Process Cancelled',
+  'is' : 'Is',
+  'thePersonName' : 'The Person Name',
+  'sayOrNo' : 'Say yes to save or no to resay his name',
+  'imageSuccess' : 'Image Captured Succefully'
 };
 
 final Map<String, dynamic> artxts = {
@@ -67,7 +85,20 @@ final Map<String, dynamic> artxts = {
   },
   'errorMsg': 'معذرة لا افهمك انطق مرة اخرى',
   'scanObjectMsg': 'تم التعرف على الخدمة المطلوبة اغراض',
-  'openPeopleScreenMsg': ''
+  'trustedPeopleWlcMsg': 'مرحبا في خدمة الناس الموثوقة',
+  'trustedPeopleFeature' : {
+    'ناسي' : 'انطق ناسي للإستماع إلي الناس المسجيلن',
+    'ناس' : 'انطق إضافة لأضفة ناس جديدة',
+    'تأكيد' : 'انطق تأكيد لتأكيد شخص'
+  },
+  'gettingUsersList' : 'جاري جلب اشخاصك الموثقين',
+  'yourTrustedUsersAre' : 'اشخاصك الموثقين هم',
+  'noTrustedPeopleFound' : 'ليس لديك اشخاص موثقين',
+  'proccessCancelled' : 'معذرة تم إنهاء المهمه',
+  'is' : 'هل',
+  'thePersonName' : 'هو اسم الشخص',
+  'say' : 'قل نعم للتأكيد او لا للإعادة',
+  'imageSuccess' : 'تم حفظ الصورة بنجاح'
 };
 
 Map<String, Map<String, dynamic>> categoryData = {
@@ -75,7 +106,6 @@ Map<String, Map<String, dynamic>> categoryData = {
     'icon': 'assets/icons/face.png',
     'color': SharedColors.primaryColor,
     'screen': TrustedUsersList()
-    // 'screen': FaceDetectorView()
   },
   Services.money.name: {
     'icon': 'assets/icons/cache.png',

@@ -1,12 +1,17 @@
-import 'package:camera/camera.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noor/face_app/services/camera.service.dart';
+import 'package:noor/face_app/services/face_detector_service.dart';
+import 'package:noor/face_app/services/ml_service.dart';
 import 'package:noor/users/logic/user.model.dart';
 import 'package:noor/main.dart';
 import 'package:noor/users/logic/user_state.dart';
 import 'package:noor/users/logic/face_utils.dart' as face_utils;
 import 'package:noor/users/screens/login_screen.dart';
 import 'package:noor/users/screens/register_screen.dart';
+import 'package:noor/users/screens/sign-in.dart';
+import 'package:noor/users/screens/sign-up.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:noor/users/logic/face_utils.dart';
 
 
 enum SplashNavigation {login, register}
@@ -15,20 +20,14 @@ class UserCubit extends Cubit<UserState> {
   UserCubit() : super(UserInitState());
 
   /// splash screen
-  
-  late CameraController controller;
-  late List<CameraDescription> cameras;
+
+  FaceDetectorService? userFaceDetectorService;
+  CameraService? userCameraService;
+  MLService? userMlService;
 
   void initSplashScreen() async {
-    await face_utils.initServices();
     await _loginScreenSpeak(selectedVoicLang['splashScreenWlcMsg']!);
     await _listenNowNavigation();
-  }
-
-  Future<void> openCamera() async {
-    cameras = await availableCameras();
-    controller = CameraController(cameras[1], ResolutionPreset.max);
-    await controller.initialize();
   }
 
   Future _listenNowNavigation() async {
@@ -58,7 +57,7 @@ class UserCubit extends Cubit<UserState> {
       await _loginScreenSpeak(selectedVoicLang['errorMsg']);
       await _listenNowNavigation();
     } else {
-      emit(SplashScreenNavigationState(newService == 'login' ? LoginScreen() : RegisterScreen()));
+      emit(SplashScreenNavigationState(newService == 'login' ? SignIn() : SignUp()));
     }
   }
 
@@ -67,6 +66,9 @@ class UserCubit extends Cubit<UserState> {
   /// login screen ///
 
   void initLoginScreen() async {
+    userFaceDetectorService = faceDetectorService;
+    userCameraService = cameraService;
+    userMlService = mlService;
     await cameraService!.initialize();
     await _loginScreenSpeak(selectedVoicLang['loginWelcomeMsg']!);
     await face_utils.startPredicting();
@@ -77,8 +79,13 @@ class UserCubit extends Cubit<UserState> {
     String auth = await _authenticate();
     await _loginScreenSpeak(selectedVoicLang[auth]);
     if (auth == 'notAPerson' || auth == 'loginErrorMsg') {
+      await face_utils.disposeServices();
+      await face_utils.initServices();
       await loginScenario();
     }
+    emit(SplashScreenNavigationState(LoginScreen()));
+
+    // if auth valud => await face_utils.disposeServices();
   }
 
 
@@ -117,6 +124,8 @@ class UserCubit extends Cubit<UserState> {
     //   return;
     // }
     // _updateRegisterSteps(RegisterSuccessState());
+
+    // if registrationValid => await face_utils.disposeServices();
   }
 
   void _updateRegisterSteps(UserState updatedState) {

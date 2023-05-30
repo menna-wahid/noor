@@ -1,9 +1,9 @@
 import 'package:camera/camera.dart';
-import 'package:noor/face_app/pages/widgets/FacePainter.dart';
+import 'package:noor/face_app/FacePainter.dart';
 import 'package:noor/face_app/services/camera.service.dart';
 import 'package:noor/face_app/services/face_detector_service.dart';
 import 'package:flutter/material.dart';
-import 'package:noor/main.dart';
+import 'package:noor/users/logic/face_utils.dart';
 
 class CameraDetectionPreview extends StatelessWidget {
   CameraDetectionPreview({Key? key}) : super(key: key);

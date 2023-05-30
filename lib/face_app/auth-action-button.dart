@@ -1,13 +1,9 @@
-import 'package:noor/trusted_people/logic/databse_helper.dart';
-import 'package:noor/users/logic/user.model.dart';
-import 'package:noor/face_app/pages/profile.dart';
-import 'package:noor/face_app/pages/widgets/app_button.dart';
 import 'package:noor/face_app/services/camera.service.dart';
 import 'package:noor/face_app/services/ml_service.dart';
 import 'package:flutter/material.dart';
-import 'package:noor/main.dart';
-import '../home.dart';
-import 'app_text_field.dart';
+import 'package:noor/trusted_people/logic/databse_helper.dart';
+import 'package:noor/users/logic/face_utils.dart';
+import 'package:noor/users/logic/user.model.dart';
 
 class AuthActionButton extends StatefulWidget {
   AuthActionButton(
@@ -43,22 +39,22 @@ class _AuthActionButtonState extends State<AuthActionButton> {
       password: password,
       modelData: predictedData,
     );
-    await _databaseHelper.insert(userToSave);
+    // await _databaseHelper.insert(userToSave);
     this._mlService.setPredictedData([]);
-    Navigator.push(context,
-        MaterialPageRoute(builder: (BuildContext context) => MyHomePage()));
+    // Navigator.push(context,
+    //     MaterialPageRoute(builder: (BuildContext context) => MyHomePage()));
   }
 
   Future _signIn(context) async {
     String password = _passwordTextEditingController.text;
     if (this.predictedUser!.password == password) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => Profile(
-                    this.predictedUser!.user,
-                    imagePath: _cameraService.imagePath!,
-                  )));
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (BuildContext context) => Profile(
+      //               this.predictedUser!.user,
+      //               imagePath: _cameraService.imagePath!,
+      //             )));
     } else {
       showDialog(
         context: context,
@@ -154,52 +150,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
                       style: TextStyle(fontSize: 20),
                     ))
                   : Container(),
-          Container(
-            child: Column(
-              children: [
-                !widget.isLogin
-                    ? AppTextField(
-                        controller: _userTextEditingController,
-                        labelText: "Your Name",
-                      )
-                    : Container(),
-                SizedBox(height: 10),
-                widget.isLogin && predictedUser == null
-                    ? Container()
-                    : AppTextField(
-                        controller: _passwordTextEditingController,
-                        labelText: "Password",
-                        isPassword: true,
-                      ),
-                SizedBox(height: 10),
-                Divider(),
-                SizedBox(height: 10),
-                widget.isLogin && predictedUser != null
-                    ? AppButton(
-                        text: 'LOGIN',
-                        onPressed: () async {
-                          _signIn(context);
-                        },
-                        icon: Icon(
-                          Icons.login,
-                          color: Colors.white,
-                        ),
-                      )
-                    : !widget.isLogin
-                        ? AppButton(
-                            text: 'SIGN UP',
-                            onPressed: () async {
-                              await _signUp(context);
-                            },
-                            icon: Icon(
-                              Icons.person_add,
-                              color: Colors.white,
-                            ),
-                          )
-                        : Container(),
-              ],
-            ),
-          ),
+          
         ],
       ),
     );
