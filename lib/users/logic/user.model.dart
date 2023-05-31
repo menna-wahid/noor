@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 class User {
   String user;
@@ -34,20 +33,20 @@ class UserModel {
 
   final int id;
   final String userName;
-  final File userImg;
+  final List userPredictedImg;
   final String addedAt;
+  final bool isAuthor;
 
-  UserModel(this.id, this.userName, this.userImg, this.addedAt);
+  UserModel(this.id, this.userName, this.userPredictedImg, this.addedAt, this.isAuthor);
 
   factory UserModel.fromMap(Map<String, dynamic> userData) {
-    return UserModel(userData['id'], userData['userName'], userData['userImg'], userData['addedAt']);
+    return UserModel(userData['id'], userData['userName'], userData['userPredictedImg'], userData['addedAt'], userData['isAuthor']);
   }
 
   Map<String, dynamic> userModelToMap() {
     return {
-      'id' : id,
       'userName' : userName,
-      'userImg' : userImg,
+      'userPredictedImg' : userPredictedImg,
       'addedAt' : addedAt
     };
   }

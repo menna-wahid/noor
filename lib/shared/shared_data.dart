@@ -53,7 +53,10 @@ final Map<String, dynamic> entxts = {
   'is' : 'Is',
   'thePersonName' : 'The Person Name',
   'sayOrNo' : 'Say yes to save or no to resay his name',
-  'imageSuccess' : 'Image Captured Succefully'
+  'imageSuccess' : 'Image Captured Succefully',
+  'savingUrData' : 'Saving your Data',
+  'savingSuccess' : 'New Trusted people saved succesfully',
+  'savingError' : 'Error Occure while saving try again'
 };
 
 final Map<String, dynamic> artxts = {
@@ -98,7 +101,10 @@ final Map<String, dynamic> artxts = {
   'is' : 'هل',
   'thePersonName' : 'هو اسم الشخص',
   'say' : 'قل نعم للتأكيد او لا للإعادة',
-  'imageSuccess' : 'تم حفظ الصورة بنجاح'
+  'imageSuccess' : 'تم حفظ الصورة بنجاح',
+  'savingUrData' : 'جار الحفظ',
+  'savingSuccess' : 'تم الحفظ بنجاح',
+  'savingError' : 'حدث خطأ برجاء المعاودة'
 };
 
 Map<String, Map<String, dynamic>> categoryData = {

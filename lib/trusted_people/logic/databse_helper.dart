@@ -14,6 +14,7 @@ class DatabaseHelper {
   static final columnUser = 'userName';
   static final columnImg = 'userImg';
   static final columnAddedAt = 'addedAt';
+  // static final columnIsAuthor = 'isAuthor';
 
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();

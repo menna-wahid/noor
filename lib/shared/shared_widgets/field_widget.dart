@@ -15,8 +15,10 @@ Container fields(String labelTxt, TextEditingController controller) {
         errorBorder: fieldBorder(Colors.red),
         enabledBorder: fieldBorder(SharedColors.primaryColor),
         focusedBorder: fieldBorder(SharedColors.primaryColor),
+        disabledBorder: fieldBorder(SharedColors.primaryColor),
         labelText: labelTxt,
         labelStyle: SharedFonts.subTxtStylePrimaryColor,
+        enabled: false
       ),
       textInputAction: TextInputAction.done,
       controller: controller,

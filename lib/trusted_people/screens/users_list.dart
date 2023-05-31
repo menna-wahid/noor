@@ -26,49 +26,47 @@ class _TrustedUsersListState extends State<TrustedUsersList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: SharedColors.backGroundColor,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: SharedColors.secondaryColor,
-        child: Icon(Icons.person_add_alt_1_sharp,
-            color: SharedColors.primaryColor, size: 25.0),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => AddUserScreen()));
-        },
-      ),
       body: BlocBuilder<TrustedPeopleCubit, TrustedPeopleState>(
         builder: (context, state) {
           TrustedPeopleCubit cubit = BlocProvider.of<TrustedPeopleCubit>(context);
-          if (state is AddTrustedPeopleNavigationState) {
-            return AddUserScreen();
-          } else {
-            return Container(
-              margin: EdgeInsets.all(10.0),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, childAspectRatio: 0.6),
-                itemCount: cubit.trustedUsers.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(shape: BoxShape.circle),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: AssetImage('assets/icons/face.png'),
-                          maxRadius: 55.0,
-                          minRadius: 55.0,
-                        ),
-                        Text('\n${cubit.trustedUsers[index].userName}', style: SharedFonts.primaryTxtStyle),
-                        Text('\n${cubit.trustedUsers[index].addedAt}', style: SharedFonts.subTxtStylePrimaryColor),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            );
-          }
+          return buildBody(state, cubit);
         },
       )
     );
+  }
+
+  Widget buildBody(TrustedPeopleState state, TrustedPeopleCubit cubit) {
+    Container container = Container();
+    if (state is AddTrustedPeopleNavigationState) {
+      // Navigator.push(context, MaterialPageRoute(builder: (_) => AddUserScreen()));
+      return AddUserScreen();
+    } else {
+      container = Container(
+        margin: EdgeInsets.all(10.0),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, childAspectRatio: 0.6),
+          itemCount: cubit.trustedUsers.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.all(10.0),
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/icons/face.png'),
+                    maxRadius: 55.0,
+                    minRadius: 55.0,
+                  ),
+                  Text('\n${cubit.trustedUsers[index].userName}', style: SharedFonts.primaryTxtStyle),
+                  Text('\n${cubit.trustedUsers[index].addedAt}', style: SharedFonts.subTxtStylePrimaryColor),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    }
+    return container;
   }
 }
