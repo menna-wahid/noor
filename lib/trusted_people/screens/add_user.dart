@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,51 +32,86 @@ class _AddUserScreenState extends State<AddUserScreen> {
       ),
       body: BlocBuilder<TrustedPeopleCubit, TrustedPeopleState>(
         builder: (context, state) {
+          print('im stateeeeeeee $state');
           return InkWell(
             onDoubleTap: () {
               BlocProvider.of<TrustedPeopleCubit>(context).takePic();
             },
-            child: buildBody(state)
+            child: state is TrustedPeopleLoadingState ? 
+            Center(child: CircularProgressIndicator()) :
+             state is AddPeopleState ? Column(children: state.columnWidgets) :
+              Center(child: Text('Error', style: SharedFonts.primaryTxtStyle))
           );
         },
       ),
     );
   }
+}
 
-  Widget buildBody(TrustedPeopleState state) {
-    List<Widget> col = [camera()];
-    if (state is BackPeopleInitState) {
-      Navigator.pop(context);
-    } else if (state is AddPeopleShowNameState) {
-      col.add(field());
-    } else if (state is AddPeopleNameDoneState) {
-      col.clear();
-      col.add(Center(child: Text('Success', style: SharedFonts.primaryTxtStyle)));
-    }
-    return Column(children: col);
-  }
+class AddPeopleCameraWidget extends StatefulWidget {
+  const AddPeopleCameraWidget({super.key});
 
-  Widget camera() {
-    print(cameraService!.cameraController!);
+  @override
+  State<AddPeopleCameraWidget> createState() => _AddPeopleCameraWidgetState();
+}
+
+class _AddPeopleCameraWidgetState extends State<AddPeopleCameraWidget> {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height / 2,
       width: MediaQuery.of(context).size.width,
       child: CameraPreview(cameraService!.cameraController!)
     );
   }
+}
 
-  Widget field() {
+
+class AddPeopleCapturedImg extends StatelessWidget {
+  final String imagePath;
+  const AddPeopleCapturedImg(this.imagePath, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      height: 200,
-      width: 200,
-      color: Colors.black,
-      child: fields('User Name', BlocProvider.of<TrustedPeopleCubit>(context).nameController),
+      height: MediaQuery.of(context).size.height / 2,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: FileImage(File(imagePath))
+        )
+      ),
     );
   }
 }
 
-// test step step
-// use el add in register
-// user verify in login
-// kda wa2fa 3la el image nafs fekret el mo4kela bta3et login
-// hwa hya5od el image mnen 34an y3mlha prediction w b3dha yrg3 el predicted data
+
+class AddPeopleFieldWidget extends StatefulWidget {
+  TextEditingController controller;
+  AddPeopleFieldWidget(this.controller, {super.key});
+
+  @override
+  State<AddPeopleFieldWidget> createState() => _AddPeopleFieldWidgetState();
+}
+
+class _AddPeopleFieldWidgetState extends State<AddPeopleFieldWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      width: MediaQuery.of(context).size.width / 1.5,
+      color: Colors.black,
+      child: fields('User Name', widget.controller),
+    );
+  }
+}
+
+
+class AddPeopleSuccessWidget extends StatelessWidget {
+  const AddPeopleSuccessWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text('Success', style: SharedFonts.primaryTxtStyle));
+  }
+}

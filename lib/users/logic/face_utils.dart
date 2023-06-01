@@ -8,7 +8,6 @@ CameraService? cameraService;
 FaceDetectorService? faceDetectorService;
 MLService? mlService;
 
-// use it only once for initialization services
 Future<void> initServices() async {
   cameraService = CameraService();
   faceDetectorService = FaceDetectorService();

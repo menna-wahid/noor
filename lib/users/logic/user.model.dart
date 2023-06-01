@@ -35,18 +35,18 @@ class UserModel {
   final String userName;
   final List userPredictedImg;
   final String addedAt;
-  final bool isAuthor;
+  // final bool isAuthor;
 
-  UserModel(this.id, this.userName, this.userPredictedImg, this.addedAt, this.isAuthor);
+  UserModel(this.id, this.userName, this.userPredictedImg, this.addedAt);
 
   factory UserModel.fromMap(Map<String, dynamic> userData) {
-    return UserModel(userData['id'], userData['userName'], userData['userPredictedImg'], userData['addedAt'], userData['isAuthor']);
+    return UserModel(userData['id'], userData['userName'], jsonDecode(userData['userPredictedImg']), userData['addedAt']);
   }
 
   Map<String, dynamic> userModelToMap() {
     return {
       'userName' : userName,
-      'userPredictedImg' : userPredictedImg,
+      'userPredictedImg' : jsonEncode(userPredictedImg),
       'addedAt' : addedAt
     };
   }

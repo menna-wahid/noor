@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noor/image_cubit.dart';
+import 'package:noor/image_screen.dart';
 import 'package:noor/navigation/logic/lang_cubit.dart';
 import 'package:noor/navigation/logic/navigation_cubit.dart';
 import 'package:noor/shared/shared_data.dart';

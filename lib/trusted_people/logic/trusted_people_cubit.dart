@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noor/main.dart';
 import 'package:noor/trusted_people/logic/databse_helper.dart';
 import 'package:noor/trusted_people/logic/trusted_people_state.dart';
+import 'package:noor/trusted_people/screens/add_user.dart';
 import 'package:noor/users/logic/face_utils.dart';
 import 'package:noor/users/logic/user.model.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
@@ -24,11 +25,10 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
 
   TrustedPeopleCubit() : super(TrustedPeopleInitState());
 
-
+  List<Widget> _widgets = [];
   List<UserModel> _trustedUsers = [];
   List<UserModel> get trustedUsers => _trustedUsers;
   TextEditingController _nameController = TextEditingController();
-  TextEditingController get nameController => _nameController;
   XFile usrImg = XFile('assets/icons/face.png');
 
   Future<void> initTrustedPeople() async {
@@ -114,8 +114,8 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
       } else if (newService == 'verify') {
 
       } else if (newService == 'people') {
-        await initAddPeople();
         emit(AddTrustedPeopleNavigationState());
+        await initAddPeople();
       } else {
         await _trustedPeopleSpeak(selectedVoicLang['errorMsg']);
         await _listenNow();
@@ -148,10 +148,13 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
   }
 
   Future<void> initAddPeople() async {
+    emit(TrustedPeopleLoadingState());
     await _trustedPeopleSpeak(selectedVoicLang['addPeopleInitMsg']);
-    await cameraService!.initialize();
+    await initServices();
     await _initAddPeopleImg();
-    emit(state);
+    _widgets.clear();
+    _widgets.add(AddPeopleCameraWidget());
+    emit(AddPeopleState(columnWidgets: _widgets));
   }
 
   int _addImgCounter = 0;
@@ -169,8 +172,11 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
   }
 
   Future<void> takePic() async {
-    XFile img = await cameraService!.cameraController!.takePicture();
-    bool isVerified = await _verifyImg(img);
+    await Future.delayed(Duration(milliseconds: 500));
+    await cameraService!.cameraController?.stopImageStream();
+    await Future.delayed(Duration(milliseconds: 200));
+    XFile? img = await cameraService!.takePicture();
+    bool isVerified = faceDetectorService!.faceDetected;
     if (!isVerified) {
       await voiceController.tts.awaitSpeakCompletion(true);
       await _trustedPeopleSpeak(selectedVoicLang['notAPerson']);
@@ -179,17 +185,10 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
     }
     await voiceController.tts.awaitSpeakCompletion(true);
     await _trustedPeopleSpeak(selectedVoicLang['imageSuccess']);
-    emit(AddPeopleShowNameState());
-  }
-
-  Future<bool> _verifyImg(XFile img) async {
-    // await faceDetectorService!.detectFacesFromImage(img);
-    // faceDetected
-    // yes
-      // return true;
-    // no
-      // return false;
-    return false;
+    _widgets.clear();
+    _widgets.add(AddPeopleCapturedImg(img!.path));
+    _widgets.add(AddPeopleFieldWidget(_nameController));
+    emit(AddPeopleState(columnWidgets: _widgets));
   }
 
   int _addNameCounter = 0;
@@ -227,6 +226,8 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
       //   usrImg = XFile('assets/icons/face.png');
       //   emit(BackPeopleInitState());
       // }
+      _widgets.add(AddPeopleSuccessWidget());
+      emit(AddPeopleState(columnWidgets: _widgets));
     } else {
       _nameController.text = '';
       return await addPeopleName();
@@ -268,7 +269,7 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
         userName,
         predictedData,
         DateTime.now().toString(),
-        false
+        // false
       );
       DatabaseHelper databaseHelper = DatabaseHelper.instance;
       databaseHelper.insert(userModel);
@@ -282,5 +283,9 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
       print(e);
       return false;
     }
+  }
+
+  Future<void> reloadWhendetectFace() async {
+     emit(TrustedPeopleInitState());
   }
 }
