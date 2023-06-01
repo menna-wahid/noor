@@ -6,8 +6,6 @@
 
 */
 
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,20 +39,19 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
   }
 
   Future _listenNow() async {
-    await voiceController.tts.awaitSpeakCompletion(true);
-    await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['trusted']);
-    await voiceController.tts.awaitSpeakCompletion(true);
-    await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['people']);
-    await voiceController.tts.awaitSpeakCompletion(true);
-    await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['verify']);
-    await voiceController.tts.awaitSpeakCompletion(true);
+    // await voiceController.tts.awaitSpeakCompletion(true);
+    // await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['trusted']);
+    // await voiceController.tts.awaitSpeakCompletion(true);
+    // await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['people']);
+    // await voiceController.tts.awaitSpeakCompletion(true);
+    // await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['verify']);
+    // await voiceController.tts.awaitSpeakCompletion(true);
     await _listenToService();
   }
 
   Future _listenToService() async {
     await voiceController.stt.listen(
       onResult: (SpeechRecognitionResult r) {
-        print(r);
         if (r.finalResult) {
           _navigatingService(r.recognizedWords);
         }
@@ -73,27 +70,21 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
       },
       listenFor: Duration(seconds: 4),
     );
+    await Future.delayed(Duration(seconds: 4));
     return word;
   }
 
   Future<String> _listenToName() async {
-    List<String> words = [];
     String name = '';
     await voiceController.stt.listen(
       onResult: (SpeechRecognitionResult r) {
-        // for (var i in r.alternates) {
-        //   if (i.recognizedWords.isNotEmpty) {
-        //     words.add(i.recognizedWords);
-        //   }
-        // }
         if (r.finalResult) {
-          // name = r.recognizedWords;
-          words.add(r.recognizedWords);
+          name = r.recognizedWords;
         }
       },
       listenFor: Duration(seconds: 4),
     );
-    print('name $words');
+    await Future.delayed(Duration(seconds: 4));
     return name;
   }
 
@@ -159,14 +150,13 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
   Future<void> initAddPeople() async {
     await _trustedPeopleSpeak(selectedVoicLang['addPeopleInitMsg']);
     await cameraService!.initialize();
-    // await _initAddPeopleImg();
-    await addPeopleName();
+    await _initAddPeopleImg();
     emit(state);
   }
 
   int _addImgCounter = 0;
   Future<void> _initAddPeopleImg() async {
-    if (_addImgCounter >= 3) {
+    if (_addImgCounter > 3) {
       await voiceController.tts.awaitSpeakCompletion(true);
       await _trustedPeopleSpeak(selectedVoicLang['proccessCancelled']);
       _addImgCounter = 0;
@@ -204,7 +194,7 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
 
   int _addNameCounter = 0;
   Future<void> addPeopleName() async {
-    if (_addNameCounter >= 3) {
+    if (_addNameCounter > 3) {
       await voiceController.tts.awaitSpeakCompletion(true);
       await _trustedPeopleSpeak(selectedVoicLang['proccessCancelled']);
       _addNameCounter = 0;
@@ -214,13 +204,15 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
     _addNameCounter++;
     await voiceController.tts.awaitSpeakCompletion(true);
     await _trustedPeopleSpeak(selectedVoicLang['sayHisName']);
-    await Future.delayed(Duration(seconds: 4));
     String name = await _listenToName();
     _nameController.text = name;
-    await Future.delayed(Duration(seconds: 4));
 
     bool yesOrNo = await _verifyYesOrNo(name);
     if (yesOrNo) {
+      await voiceController.tts.awaitSpeakCompletion(true);
+      await _trustedPeopleSpeak(selectedVoicLang['nameSaved']);
+      await voiceController.tts.awaitSpeakCompletion(true);
+      await _trustedPeopleSpeak(selectedVoicLang['savingUrData']);
       // bool isSaved = await _savePeopleToLocal(nameController.text, usrImg);
       // if (isSaved) {
       //   _addNameCounter = 0;
@@ -235,7 +227,6 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
       //   usrImg = XFile('assets/icons/face.png');
       //   emit(BackPeopleInitState());
       // }
-      emit(AddPeopleNameDoneState());
     } else {
       _nameController.text = '';
       return await addPeopleName();

@@ -64,7 +64,12 @@ class _AddUserScreenState extends State<AddUserScreen> {
   }
 
   Widget field() {
-    return fields('User Name', BlocProvider.of<TrustedPeopleCubit>(context).nameController);
+    return Container(
+      height: 200,
+      width: 200,
+      color: Colors.black,
+      child: fields('User Name', BlocProvider.of<TrustedPeopleCubit>(context).nameController),
+    );
   }
 }
 

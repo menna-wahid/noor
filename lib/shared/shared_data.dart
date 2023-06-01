@@ -56,7 +56,8 @@ final Map<String, dynamic> entxts = {
   'imageSuccess' : 'Image Captured Succefully',
   'savingUrData' : 'Saving your Data',
   'savingSuccess' : 'New Trusted people saved succesfully',
-  'savingError' : 'Error Occure while saving try again'
+  'savingError' : 'Error Occure while saving try again',
+  'nameSaved' : 'Name Saved Succesfully'
 };
 
 final Map<String, dynamic> artxts = {
@@ -104,7 +105,8 @@ final Map<String, dynamic> artxts = {
   'imageSuccess' : 'تم حفظ الصورة بنجاح',
   'savingUrData' : 'جار الحفظ',
   'savingSuccess' : 'تم الحفظ بنجاح',
-  'savingError' : 'حدث خطأ برجاء المعاودة'
+  'savingError' : 'حدث خطأ برجاء المعاودة',
+  'nameSaved' : 'لقد تم حفظ الاسم بنجاح'
 };
 
 Map<String, Map<String, dynamic>> categoryData = {
