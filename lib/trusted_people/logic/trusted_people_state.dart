@@ -8,7 +8,7 @@ class TrustedPeopleInitState extends TrustedPeopleState {}
 
 class TrustedPeopleLoadingState extends TrustedPeopleState {}
 
-class AddTrustedPeopleNavigationState extends TrustedPeopleState {}
+// class AddTrustedPeopleNavigationState extends TrustedPeopleState {}
 
 class BackPeopleInitState extends TrustedPeopleState {}
 

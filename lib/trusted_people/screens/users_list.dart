@@ -5,6 +5,7 @@ import 'package:noor/shared/shared_theme/shared_fonts.dart';
 import 'package:noor/trusted_people/logic/trusted_people_cubit.dart';
 import 'package:noor/trusted_people/logic/trusted_people_state.dart';
 import 'package:noor/trusted_people/screens/add_user.dart';
+import 'package:noor/users/logic/face_utils.dart';
 
 
 class TrustedUsersList extends StatefulWidget {
@@ -28,6 +29,9 @@ class _TrustedUsersListState extends State<TrustedUsersList> {
       backgroundColor: SharedColors.backGroundColor,
       body: BlocBuilder<TrustedPeopleCubit, TrustedPeopleState>(
         builder: (context, state) {
+          if (state is AddPeopleState) {
+            BlocProvider.of<TrustedPeopleCubit>(context).reloadWhendetectFace();
+          }
           TrustedPeopleCubit cubit = BlocProvider.of<TrustedPeopleCubit>(context);
           return buildBody(state, cubit);
         },
@@ -36,10 +40,11 @@ class _TrustedUsersListState extends State<TrustedUsersList> {
   }
 
   Widget buildBody(TrustedPeopleState state, TrustedPeopleCubit cubit) {
-    Container container = Container();
-    if (state is AddTrustedPeopleNavigationState) {
-      // Navigator.push(context, MaterialPageRoute(builder: (_) => AddUserScreen()));
-      return AddUserScreen();
+    Container container = Container(color: Colors.black,);
+    if (state is TrustedPeopleLoadingState) {
+      return Center(child: CircularProgressIndicator());
+    } else if (state is AddPeopleState) {
+      return AddUserScreen(state.columnWidgets);
     } else {
       container = Container(
         margin: EdgeInsets.all(10.0),

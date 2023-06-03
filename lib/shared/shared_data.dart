@@ -45,7 +45,7 @@ final Map<String, dynamic> entxts = {
   'yourTrustedUsersAre' : 'Your Trusted People Are',
   'noTrustedPeopleFound' : 'There is no Trusted People in your list',
   'addPeopleInitMsg' : 'To Add New People you have 2 steps',
-  'putCamera' : 'Put the Camera Front of Person face',
+  'putCamera' : 'Put the Camera Front of Person face and Double tap on screen to take a picture',
   'sayHisName' : 'Now Say this person Name',
   'successAdded' : 'Succefully Added',
   'errorAdd' : 'Error Add this Person try again',

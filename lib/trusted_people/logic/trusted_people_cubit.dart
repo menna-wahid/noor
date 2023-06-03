@@ -13,7 +13,7 @@ import 'package:noor/main.dart';
 import 'package:noor/trusted_people/logic/databse_helper.dart';
 import 'package:noor/trusted_people/logic/trusted_people_state.dart';
 import 'package:noor/trusted_people/screens/add_user.dart';
-import 'package:noor/users/logic/face_utils.dart';
+import 'package:noor/users/logic/face_utils.dart' as face_utils;
 import 'package:noor/users/logic/user.model.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 
@@ -114,7 +114,6 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
       } else if (newService == 'verify') {
 
       } else if (newService == 'people') {
-        emit(AddTrustedPeopleNavigationState());
         await initAddPeople();
       } else {
         await _trustedPeopleSpeak(selectedVoicLang['errorMsg']);
@@ -150,7 +149,8 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
   Future<void> initAddPeople() async {
     emit(TrustedPeopleLoadingState());
     await _trustedPeopleSpeak(selectedVoicLang['addPeopleInitMsg']);
-    await initServices();
+    await face_utils.initServices();
+    await face_utils.startPredicting();
     await _initAddPeopleImg();
     _widgets.clear();
     _widgets.add(AddPeopleCameraWidget());
@@ -173,10 +173,10 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
 
   Future<void> takePic() async {
     await Future.delayed(Duration(milliseconds: 500));
-    await cameraService!.cameraController?.stopImageStream();
+    await face_utils.cameraService!.cameraController?.stopImageStream();
     await Future.delayed(Duration(milliseconds: 200));
-    XFile? img = await cameraService!.takePicture();
-    bool isVerified = faceDetectorService!.faceDetected;
+    XFile? img = await face_utils.cameraService!.takePicture();
+    bool isVerified = face_utils.faceDetectorService!.faceDetected;
     if (!isVerified) {
       await voiceController.tts.awaitSpeakCompletion(true);
       await _trustedPeopleSpeak(selectedVoicLang['notAPerson']);
@@ -189,6 +189,7 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
     _widgets.add(AddPeopleCapturedImg(img!.path));
     _widgets.add(AddPeopleFieldWidget(_nameController));
     emit(AddPeopleState(columnWidgets: _widgets));
+    await addPeopleName();
   }
 
   int _addNameCounter = 0;
@@ -263,7 +264,7 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
     await voiceController.tts.awaitSpeakCompletion(true);
     await _trustedPeopleSpeak(selectedVoicLang['savingUrData']);
     try {
-      List predictedData = mlService!.predictedData;
+      List predictedData = face_utils.mlService!.predictedData;
       UserModel userModel = UserModel(
         0,
         userName,
@@ -273,7 +274,7 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
       );
       DatabaseHelper databaseHelper = DatabaseHelper.instance;
       databaseHelper.insert(userModel);
-      mlService!.setPredictedData([]);
+      face_utils.mlService!.setPredictedData([]);
       await voiceController.tts.awaitSpeakCompletion(true);
       await _trustedPeopleSpeak(selectedVoicLang['savingSuccess']);
       return true;
@@ -286,6 +287,7 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
   }
 
   Future<void> reloadWhendetectFace() async {
-     emit(TrustedPeopleInitState());
+    emit(AddPeopleState(columnWidgets: _widgets));
+    // emit(state);
   }
 }
