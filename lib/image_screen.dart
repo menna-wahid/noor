@@ -32,11 +32,31 @@ class _ImageScreenState extends State<ImageScreen> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: SharedColors.backGroundColor,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add, color: Colors.white, size: 20.0),
-        onPressed: () async {
-          BlocProvider.of<ImageCubit>(context).takePic();
-        },
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          FloatingActionButton(
+            heroTag: 'y',
+            child: Icon(Icons.data_object, color: Colors.white, size: 20.0),
+            onPressed: () async {
+              BlocProvider.of<ImageCubit>(context).saveToDB();
+            },
+          ),
+          FloatingActionButton(
+            heroTag: 'h',
+            child: Icon(Icons.add, color: Colors.white, size: 20.0),
+            onPressed: () async {
+              BlocProvider.of<ImageCubit>(context).takePic();
+            },
+          ),
+          FloatingActionButton(
+            heroTag: 'g',
+            child: Icon(Icons.arrow_forward_ios, color: Colors.white, size: 20.0),
+            onPressed: () async {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => Users()));
+            },
+          ),
+        ],
       ),
       body: BlocBuilder<ImageCubit, ImageState>(
         builder: (context, state) {
@@ -80,6 +100,57 @@ class _ImageScreenState extends State<ImageScreen> {
               ),
             ),
           );
+          }
+        },
+      ),
+    );
+  }
+}
+
+
+
+class Users extends StatefulWidget {
+  const Users({super.key});
+
+  @override
+  State<Users> createState() => _UsersState();
+}
+
+class _UsersState extends State<Users> {
+
+  @override
+  void initState() {
+    BlocProvider.of<ImageCubit>(context).getUserData();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black, size: 25),
+      ),
+      body: BlocBuilder<ImageCubit, ImageState>(
+        builder: (context, state) {
+          ImageCubit cubit = BlocProvider.of<ImageCubit>(context);
+          if (state is GetUsersLoadingState) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return ListView.builder(
+              itemCount: cubit.trustedUsers.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  height: 200,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: MemoryImage(cubit.trustedUsers[index].img!),
+                      fit: BoxFit.fill
+                    )
+                  ),
+                );
+              },
+            );
           }
         },
       ),

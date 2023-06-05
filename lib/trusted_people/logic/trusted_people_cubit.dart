@@ -264,17 +264,17 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
     await voiceController.tts.awaitSpeakCompletion(true);
     await _trustedPeopleSpeak(selectedVoicLang['savingUrData']);
     try {
-      List predictedData = face_utils.mlService!.predictedData;
-      UserModel userModel = UserModel(
-        0,
-        userName,
-        predictedData,
-        DateTime.now().toString(),
-        // false
-      );
-      DatabaseHelper databaseHelper = DatabaseHelper.instance;
-      databaseHelper.insert(userModel);
-      face_utils.mlService!.setPredictedData([]);
+      // List predictedData = face_utils.mlService!.predictedData;
+      // UserModel userModel = UserModel(
+      //   0,
+      //   userName,
+      //   // predictedData,
+      //   DateTime.now().toString(),
+      //   // false
+      // );
+      // DatabaseHelper databaseHelper = DatabaseHelper.instance;
+      // databaseHelper.insert(userModel);
+      // face_utils.mlService!.setPredictedData([]);
       await voiceController.tts.awaitSpeakCompletion(true);
       await _trustedPeopleSpeak(selectedVoicLang['savingSuccess']);
       return true;

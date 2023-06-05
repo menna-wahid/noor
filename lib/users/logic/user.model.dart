@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 class User {
   String user;
@@ -33,21 +34,27 @@ class UserModel {
 
   final int id;
   final String userName;
-  final List userPredictedImg;
+  final String userPredictedImg;
   final String addedAt;
+  Uint8List? img;
   // final bool isAuthor;
 
-  UserModel(this.id, this.userName, this.userPredictedImg, this.addedAt);
+  UserModel(this.id, this.userName, this.userPredictedImg, this.addedAt, {this.img});
 
   factory UserModel.fromMap(Map<String, dynamic> userData) {
-    return UserModel(userData['id'], userData['userName'], jsonDecode(userData['userPredictedImg']), userData['addedAt']);
+    return UserModel(userData['id'], userData['userName'], userData['userImg'], userData['addedAt']);
   }
 
   Map<String, dynamic> userModelToMap() {
     return {
       'userName' : userName,
-      'userPredictedImg' : jsonEncode(userPredictedImg),
+      'userImg' : userPredictedImg,
       'addedAt' : addedAt
     };
+  }
+
+  @override
+  String toString() {
+    return '$id, | $userName, | $userPredictedImg, | $addedAt';
   }
 }
