@@ -14,7 +14,7 @@ class DatabaseHelper {
   static final columnUser = 'userName';
   static final columnImg = 'userImg';
   static final columnAddedAt = 'addedAt';
-  // static final columnIsAuthor = 'isAuthor';
+  static final columnIsAuthor = 'isAuthor';
 
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -38,7 +38,8 @@ class DatabaseHelper {
             $columnId INTEGER PRIMARY KEY,
             $columnUser TEXT NOT NULL,
             $columnImg TEXT NOT NULL,
-            $columnAddedAt TEXT NOT NULL
+            $columnAddedAt TEXT NOT NULL,
+            $columnIsAuthor INTEGER NOT NULL
           )
           ''');
   }

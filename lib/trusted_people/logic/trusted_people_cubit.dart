@@ -6,6 +6,9 @@
 
 */
 
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,23 +32,23 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
   List<UserModel> _trustedUsers = [];
   List<UserModel> get trustedUsers => _trustedUsers;
   TextEditingController _nameController = TextEditingController();
-  XFile usrImg = XFile('assets/icons/face.png');
 
   Future<void> initTrustedPeople() async {
 
     await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleWlcMsg']);
     await _getTrustedUsers();
+    emit(state);
     await _listenNow();
   }
 
   Future _listenNow() async {
-    // await voiceController.tts.awaitSpeakCompletion(true);
-    // await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['trusted']);
-    // await voiceController.tts.awaitSpeakCompletion(true);
-    // await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['people']);
-    // await voiceController.tts.awaitSpeakCompletion(true);
-    // await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['verify']);
-    // await voiceController.tts.awaitSpeakCompletion(true);
+    await voiceController.tts.awaitSpeakCompletion(true);
+    await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['trusted']);
+    await voiceController.tts.awaitSpeakCompletion(true);
+    await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['people']);
+    await voiceController.tts.awaitSpeakCompletion(true);
+    await _trustedPeopleSpeak(selectedVoicLang['trustedPeopleFeature']['verify']);
+    await voiceController.tts.awaitSpeakCompletion(true);
     await _listenToService();
   }
 
@@ -139,6 +142,10 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
 
     DatabaseHelper databaseHelper = DatabaseHelper.instance;
     List<UserModel> users = await databaseHelper.queryAllUsers();
+    for (int i = 0; i < users.length; i++) {
+      Uint8List uniImg = base64Decode(users[i].userPredictedImg);
+      users[i].img = uniImg;
+    }
     if (users.isNotEmpty) _trustedUsers.addAll(users);
   }
 
@@ -183,10 +190,11 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
       await _initAddPeopleImg();
       return;
     }
+    capturedImg = File(img!.path);
     await voiceController.tts.awaitSpeakCompletion(true);
     await _trustedPeopleSpeak(selectedVoicLang['imageSuccess']);
     _widgets.clear();
-    _widgets.add(AddPeopleCapturedImg(img!.path));
+    _widgets.add(AddPeopleCapturedImg(capturedImg!.path));
     _widgets.add(AddPeopleFieldWidget(_nameController));
     emit(AddPeopleState(columnWidgets: _widgets));
     await addPeopleName();
@@ -213,22 +221,24 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
       await _trustedPeopleSpeak(selectedVoicLang['nameSaved']);
       await voiceController.tts.awaitSpeakCompletion(true);
       await _trustedPeopleSpeak(selectedVoicLang['savingUrData']);
-      // bool isSaved = await _savePeopleToLocal(nameController.text, usrImg);
-      // if (isSaved) {
-      //   _addNameCounter = 0;
-      //   _addImgCounter = 0;
-      //   nameController.text = '';
-      //   usrImg = XFile('assets/icons/face.png');
-      //   emit(AddPeopleNameDoneState());
-      // } else {
-      //   _addNameCounter = 0;
-      //   _addImgCounter = 0;
-      //   nameController.text = '';
-      //   usrImg = XFile('assets/icons/face.png');
-      //   emit(BackPeopleInitState());
-      // }
-      _widgets.add(AddPeopleSuccessWidget());
-      emit(AddPeopleState(columnWidgets: _widgets));
+      bool isSaved = await _savePeopleToLocal(_nameController.text);
+      if (isSaved) {
+        _addNameCounter = 0;
+        _addImgCounter = 0;
+        _nameController.text = '';
+        capturedImg = File('assets/icons/face.png');
+        _widgets.add(AddPeopleSuccessWidget());
+        emit(AddPeopleState(columnWidgets: _widgets));
+        _trustedUsers.clear();
+        await _getTrustedUsers();
+        emit(BackPeopleInitState());
+      } else {
+        _addNameCounter = 0;
+        _addImgCounter = 0;
+        _nameController.text = '';
+        capturedImg = File('assets/icons/face.png');
+        emit(BackPeopleInitState());
+      }
     } else {
       _nameController.text = '';
       return await addPeopleName();
@@ -239,7 +249,7 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
     await _sayYesOrNo(name);
     String word = await _listenToYesOrNo();
 
-    if (word.toLowerCase() == 'yes') {
+    if (word.toLowerCase() == 'approve') {
       return true;
     } else if (word.toLowerCase() == 'no') {
       return false;
@@ -260,34 +270,45 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
     await voiceController.tts.awaitSpeakCompletion(true);
   }
 
-  Future<bool> _savePeopleToLocal(String userName, XFile img) async {
+  File? capturedImg;
+
+  Future<bool> _savePeopleToLocal(String userName) async {
     await voiceController.tts.awaitSpeakCompletion(true);
     await _trustedPeopleSpeak(selectedVoicLang['savingUrData']);
-    try {
-      // List predictedData = face_utils.mlService!.predictedData;
-      // UserModel userModel = UserModel(
-      //   0,
-      //   userName,
-      //   // predictedData,
-      //   DateTime.now().toString(),
-      //   // false
-      // );
-      // DatabaseHelper databaseHelper = DatabaseHelper.instance;
-      // databaseHelper.insert(userModel);
-      // face_utils.mlService!.setPredictedData([]);
+    bool isSaved = await _encodingUserData(userName);
+    if (isSaved) {
       await voiceController.tts.awaitSpeakCompletion(true);
       await _trustedPeopleSpeak(selectedVoicLang['savingSuccess']);
       return true;
-    } catch (e) {
+    } else {
       await voiceController.tts.awaitSpeakCompletion(true);
       await _trustedPeopleSpeak(selectedVoicLang['savingError']);
-      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> _encodingUserData(String userName) async {
+
+    try {
+      Uint8List uniImg = await capturedImg!.readAsBytes();
+      String img = base64Encode(uniImg);
+      UserModel userModel = UserModel(
+        0,
+        userName,
+        img,
+        DateTime.now().toString(),
+        1
+      );
+      DatabaseHelper databaseHelper = DatabaseHelper.instance;
+      databaseHelper.insert(userModel);
+      face_utils.mlService!.setPredictedData([]);
+      return true;
+    } catch (e) {
       return false;
     }
   }
 
   Future<void> reloadWhendetectFace() async {
     emit(AddPeopleState(columnWidgets: _widgets));
-    // emit(state);
   }
 }

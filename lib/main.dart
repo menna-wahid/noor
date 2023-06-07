@@ -2,14 +2,12 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:noor/image_cubit.dart';
-import 'package:noor/image_screen.dart';
 import 'package:noor/navigation/logic/lang_cubit.dart';
 import 'package:noor/navigation/logic/navigation_cubit.dart';
+import 'package:noor/navigation/screens/homepage.dart';
 import 'package:noor/shared/shared_data.dart';
 import 'package:noor/splash_screen.dart';
 import 'package:noor/trusted_people/logic/trusted_people_cubit.dart';
-import 'package:noor/trusted_people/screens/users_list.dart';
 import 'package:noor/users/logic/face_utils.dart';
 import 'package:noor/users/logic/users_cubit.dart';
 import 'package:noor/voice_assist/logic/voice_controller.dart';
@@ -57,14 +55,11 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => LangCubit(),
         ),
-        BlocProvider(
-          create: (context) => ImageCubit(),
-        ),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        // home: TrustedUsersList(),
-        home: ImageScreen()
+        // home: HomePage(),
+        home: SplashScreen(),
       ),
     );
   }

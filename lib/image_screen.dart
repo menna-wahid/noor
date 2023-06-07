@@ -157,6 +157,3 @@ class _UsersState extends State<Users> {
     );
   }
 }
-
-// test first the bool 
-// implement on screens and care of changes & register use the same

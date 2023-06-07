@@ -45,19 +45,22 @@ final Map<String, dynamic> entxts = {
   'yourTrustedUsersAre' : 'Your Trusted People Are',
   'noTrustedPeopleFound' : 'There is no Trusted People in your list',
   'addPeopleInitMsg' : 'To Add New People you have 2 steps',
-  'putCamera' : 'Put the Camera Front of Person face and Double tap on screen to take a picture',
+  'putCamera' : 'Put the Camera Front of Person face and Double tap on screen to take a photo',
   'sayHisName' : 'Now Say this person Name',
+  'sayUrName' : 'Now Say your Name',
   'successAdded' : 'Succefully Added',
   'errorAdd' : 'Error Add this Person try again',
   'proccessCancelled' : 'Sorry Process Cancelled',
   'is' : 'Is',
   'thePersonName' : 'The Person Name',
-  'sayOrNo' : 'Say yes to save or no to resay his name',
+  'yourName' : 'Your Name',
+  'sayOrNo' : 'Say approve to save or no to resay his name',
   'imageSuccess' : 'Image Captured Succefully',
   'savingUrData' : 'Saving your Data',
   'savingSuccess' : 'New Trusted people saved succesfully',
+  'registerSavingSuccess' : 'You are registered Succefully',
   'savingError' : 'Error Occure while saving try again',
-  'nameSaved' : 'Name Saved Succesfully'
+  'nameSaved' : 'Name Saved Succesfully',
 };
 
 final Map<String, dynamic> artxts = {
@@ -106,7 +109,10 @@ final Map<String, dynamic> artxts = {
   'savingUrData' : 'جار الحفظ',
   'savingSuccess' : 'تم الحفظ بنجاح',
   'savingError' : 'حدث خطأ برجاء المعاودة',
-  'nameSaved' : 'لقد تم حفظ الاسم بنجاح'
+  'nameSaved' : 'لقد تم حفظ الاسم بنجاح',
+  'sayUrName' : 'الان قول اسمك',
+  'yourName' : 'اسمك هو',
+  'registerSavingSuccess' : 'لقد قمت بالتسجيل بنجاح',
 };
 
 Map<String, Map<String, dynamic>> categoryData = {

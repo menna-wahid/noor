@@ -42,7 +42,6 @@ class ImageCubit extends Cubit<ImageState> {
   Future<void> saveToDB() async {
 
     try {
-      // List predictedData = face_utils.mlService!.predictedData;
       Uint8List uniImg = await capturedImg!.readAsBytes();
       String img = base64Encode(uniImg);
       UserModel userModel = UserModel(
@@ -50,7 +49,7 @@ class ImageCubit extends Cubit<ImageState> {
         'ahmed',
         img,
         DateTime.now().toString(),
-        // false
+        1
       );
       DatabaseHelper databaseHelper = DatabaseHelper.instance;
       databaseHelper.insert(userModel);
@@ -72,10 +71,6 @@ class ImageCubit extends Cubit<ImageState> {
       users[i].img = uniImg;
     }
     if (users.isNotEmpty) _trustedUsers.addAll(users);
-    
-    for (var i in users) {
-      print(i.toString());
-    }
 
     emit(GetUsersState());
   }

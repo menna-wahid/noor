@@ -7,6 +7,8 @@ import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/shared/shared_theme/shared_fonts.dart';
 import 'package:noor/users/logic/user_state.dart';
 import 'package:noor/users/logic/users_cubit.dart';
+import 'package:noor/users/screens/login_screen.dart';
+import 'package:noor/users/screens/register_screen.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -50,53 +52,66 @@ class _SplashScreenState extends State<SplashScreen> {
             }),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
-          if (state is SplashScreenNavigationState) {
-            return state.screen;
-          } else {
-            return Container(
-                margin: EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height / 3,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/icons/wlc.jpg'),
-                              fit: BoxFit.fill)),
-                    ),
-                    TextButton(
-                      child: Text(
-                        selectedVoicLang['login'],
-                        style: SharedFonts.whiteTxtStyle,
-                      ),
-                      style: TextButton.styleFrom(
-                          backgroundColor: SharedColors.primaryColor,
-                          elevation: 0.0,
-                          fixedSize: Size(200.0, 50.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0))),
-                      onPressed: () {},
-                    ),
-                    TextButton(
-                      child: Text(
-                        selectedVoicLang['register'],
-                        style: SharedFonts.whiteTxtStyle,
-                      ),
-                      style: TextButton.styleFrom(
-                          backgroundColor: SharedColors.primaryColor,
-                          elevation: 0.0,
-                          fixedSize: Size(200.0, 50.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0))),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-            );
-          }
+          return buildBody(state);
         },
       )
+    );
+  }
+
+  buildBody(UserState state) {
+    Widget loadingWidget = Center(child: CircularProgressIndicator());
+    if (state is RegisterUserLoadingState) {
+      return loadingWidget;
+    } else if (state is RegisterUserState) {
+      return RegisterScreen();
+    } else if (state is LoginInitState) {
+      return LoginScreen();
+    } else {
+      return homeWidget();
+    }
+  }
+
+  Widget homeWidget() {
+    return Container(
+        margin: EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height / 3,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/icons/wlc.jpg'),
+                      fit: BoxFit.fill)),
+            ),
+            TextButton(
+              child: Text(
+                selectedVoicLang['login'],
+                style: SharedFonts.whiteTxtStyle,
+              ),
+              style: TextButton.styleFrom(
+                  backgroundColor: SharedColors.primaryColor,
+                  elevation: 0.0,
+                  fixedSize: Size(200.0, 50.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0))),
+              onPressed: () {},
+            ),
+            TextButton(
+              child: Text(
+                selectedVoicLang['register'],
+                style: SharedFonts.whiteTxtStyle,
+              ),
+              style: TextButton.styleFrom(
+                  backgroundColor: SharedColors.primaryColor,
+                  elevation: 0.0,
+                  fixedSize: Size(200.0, 50.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0))),
+              onPressed: () {},
+            ),
+          ],
+        ),
     );
   }
 }

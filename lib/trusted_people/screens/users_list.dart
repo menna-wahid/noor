@@ -5,7 +5,6 @@ import 'package:noor/shared/shared_theme/shared_fonts.dart';
 import 'package:noor/trusted_people/logic/trusted_people_cubit.dart';
 import 'package:noor/trusted_people/logic/trusted_people_state.dart';
 import 'package:noor/trusted_people/screens/add_user.dart';
-import 'package:noor/users/logic/face_utils.dart';
 
 
 class TrustedUsersList extends StatefulWidget {
@@ -27,6 +26,12 @@ class _TrustedUsersListState extends State<TrustedUsersList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: SharedColors.backGroundColor,
+      appBar: AppBar(
+        backgroundColor: SharedColors.backGroundColor,
+        elevation: 0.0,
+        title: Text('Trusted People', style: SharedFonts.primaryTxtStyle),
+        iconTheme: IconThemeData(color: SharedColors.primaryColor, size: 25.0),
+      ),
       body: BlocBuilder<TrustedPeopleCubit, TrustedPeopleState>(
         builder: (context, state) {
           if (state is AddPeopleState) {
@@ -59,7 +64,7 @@ class _TrustedUsersListState extends State<TrustedUsersList> {
               child: Column(
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage('assets/icons/face.png'),
+                    backgroundImage: MemoryImage(cubit.trustedUsers[index].img!),
                     maxRadius: 55.0,
                     minRadius: 55.0,
                   ),

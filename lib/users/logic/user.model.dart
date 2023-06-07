@@ -37,24 +37,26 @@ class UserModel {
   final String userPredictedImg;
   final String addedAt;
   Uint8List? img;
-  // final bool isAuthor;
+  // isAuthor ? 0 : 1
+  final int isAuthor;
 
-  UserModel(this.id, this.userName, this.userPredictedImg, this.addedAt, {this.img});
+  UserModel(this.id, this.userName, this.userPredictedImg, this.addedAt, this.isAuthor, {this.img});
 
   factory UserModel.fromMap(Map<String, dynamic> userData) {
-    return UserModel(userData['id'], userData['userName'], userData['userImg'], userData['addedAt']);
+    return UserModel(userData['id'], userData['userName'], userData['userImg'], userData['addedAt'].toString().substring(0, 10), userData['isAuthor']);
   }
 
   Map<String, dynamic> userModelToMap() {
     return {
       'userName' : userName,
       'userImg' : userPredictedImg,
-      'addedAt' : addedAt
+      'addedAt' : addedAt.toString().substring(0, 10),
+      'isAuthor' : isAuthor
     };
   }
 
   @override
   String toString() {
-    return '$id, | $userName, | $userPredictedImg, | $addedAt';
+    return '$id, | $userName, | $userPredictedImg, | $addedAt, | $isAuthor';
   }
 }
