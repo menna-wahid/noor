@@ -74,4 +74,13 @@ class ImageCubit extends Cubit<ImageState> {
 
     emit(GetUsersState());
   }
+
+  Future<void> login() async {
+    List predictedData = await mlService!.predictedData;
+    var usr = await mlService!.predict();
+    // el mafrod hena en predict btnfz method f el background bt2ol eza kan el sorten mot4abhen
+      // wla la lma btm3l compare ma ben el dtected face f el pic ely saved w el pic ly lsa mta5da
+      // b3d ma ygeb predictedData mn kol swra lw7dha
+      // TEST hena el awl w b3dha kamel إن شاء الله
+  }
 }
