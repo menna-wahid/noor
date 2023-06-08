@@ -36,9 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: SharedColors.backGroundColor,
       body: BlocBuilder<UserCubit, UserState>(builder: (context, state) {
         UserCubit services = BlocProvider.of<UserCubit>(context);
+        services.reloadWhendetectFace();
         return InkWell(
           onDoubleTap: () {
-            BlocProvider.of<UserCubit>(context).loginScenario();
+            BlocProvider.of<UserCubit>(context).login();
           },
           child: Transform.scale(
             scale: 1.0,
@@ -51,16 +52,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     width: width,
                     height:
-                        width * services.userCameraService!.cameraController!.value.aspectRatio,
+                        width * face_utils.cameraService!.cameraController!.value.aspectRatio,
                     child: Stack(
                       fit: StackFit.expand,
                       children: <Widget>[
-                        CameraPreview(services.userCameraService!.cameraController!),
-                        if (services.userFaceDetectorService!.faceDetected)
+                        CameraPreview(face_utils.cameraService!.cameraController!),
+                        if (face_utils.faceDetectorService!.faceDetected)
                           CustomPaint(
                             painter: FacePainter(
-                              face: services.userFaceDetectorService!.faces[0],
-                              imageSize: services.userCameraService!.getImageSize(),
+                              face: face_utils.faceDetectorService!.faces[0],
+                              imageSize: face_utils.cameraService!.getImageSize(),
                             ),
                           )
                       ],

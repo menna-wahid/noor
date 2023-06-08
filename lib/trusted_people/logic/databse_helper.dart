@@ -15,6 +15,7 @@ class DatabaseHelper {
   static final columnImg = 'userImg';
   static final columnAddedAt = 'addedAt';
   static final columnIsAuthor = 'isAuthor';
+  static final columnPredictedImgData = 'predictedImgData';
 
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -39,7 +40,8 @@ class DatabaseHelper {
             $columnUser TEXT NOT NULL,
             $columnImg TEXT NOT NULL,
             $columnAddedAt TEXT NOT NULL,
-            $columnIsAuthor INTEGER NOT NULL
+            $columnIsAuthor INTEGER NOT NULL,
+            $columnPredictedImgData TEXT NOT NULL
           )
           ''');
   }

@@ -60,7 +60,7 @@ class MLService {
     this._predictedData = List.from(output);
   }
 
-  Future<User?> predict() async {
+  Future<UserModel?> predict() async {
     return _searchResult(this._predictedData);
   }
 
@@ -104,19 +104,18 @@ class MLService {
     return convertedBytes.buffer.asFloat32List();
   }
 
-  Future<User?> _searchResult(List predictedData) async {
+  Future<UserModel?> _searchResult(List predictedData) async {
     DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
-    // List<User> users = await _dbHelper.queryAllUsers();
-    List<User> users = [];
+    List<UserModel> users = await _dbHelper.queryAllUsers();
     double minDist = 999;
     double currDist = 0.0;
-    User? predictedResult;
+    UserModel? predictedResult;
 
     print('users.length=> ${users.length}');
 
-    for (User u in users) {
-      currDist = _euclideanDistance(u.modelData, predictedData);
+    for (UserModel u in users) {
+      currDist = _euclideanDistance(u.predictedImgData, predictedData);
       if (currDist <= threshold && currDist < minDist) {
         minDist = currDist;
         predictedResult = u;

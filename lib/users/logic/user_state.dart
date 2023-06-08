@@ -10,7 +10,7 @@ class LoginInitState extends UserState {}
 
 class LoginSuccessState extends UserState {}
 
-class LoginFailedState extends UserState {}
+class LoginUserLoadingState extends UserState {}
 
 class RegisterUserState extends UserState {
   List<Widget> columnWidgets;

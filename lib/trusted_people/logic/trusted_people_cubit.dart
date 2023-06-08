@@ -292,12 +292,14 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
     try {
       Uint8List uniImg = await capturedImg!.readAsBytes();
       String img = base64Encode(uniImg);
+      List predictedImg = face_utils.mlService!.predictedData;
       UserModel userModel = UserModel(
         0,
         userName,
         img,
         DateTime.now().toString(),
-        1
+        1,
+        predictedImg
       );
       DatabaseHelper databaseHelper = DatabaseHelper.instance;
       databaseHelper.insert(userModel);

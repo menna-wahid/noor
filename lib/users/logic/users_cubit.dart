@@ -81,34 +81,44 @@ class UserCubit extends Cubit<UserState> {
   /// login screen ///
 
   void initLoginScreen() async {
-    userFaceDetectorService = faceDetectorService;
-    userCameraService = cameraService;
-    userMlService = mlService;
-    await cameraService!.initialize();
+    emit(LoginUserLoadingState());
+    await face_utils.initServices();
     await _loginScreenSpeak(selectedVoicLang['loginWelcomeMsg']!);
     await face_utils.startPredicting();
   }
 
-
-  Future<void> loginScenario() async {
-    String auth = await _authenticate();
-    await _loginScreenSpeak(selectedVoicLang[auth]);
-    if (auth == 'notAPerson' || auth == 'loginErrorMsg') {
-      await face_utils.disposeServices();
-      await face_utils.initServices();
-      await loginScenario();
+  int _loginCounter = 0;
+  Future<void> login() async {
+    if (_loginCounter >= 3) {
+      await voiceController.tts.awaitSpeakCompletion(true);
+      await _loginScreenSpeak(selectedVoicLang['proccessCancelled']);
+      _loginCounter = 0;
+      return;
     }
-
-    // if auth valud => await face_utils.disposeServices();
-  }
-
-
-  Future<void> _successLoginSpeak() async {
-    await _loginScreenSpeak(selectedVoicLang['loginSuccessMsg']);
-  }
-
-  Future<void> _failedLoginSpeak() async {
-    await _loginScreenSpeak(selectedVoicLang['loginErrorMsg']);
+    if (face_utils.faceDetectorService!.faceDetected) {
+      try {
+        UserModel? usr = await mlService!.predict();
+        if (usr == null) {
+          await voiceController.tts.awaitSpeakCompletion(true);
+          await _loginScreenSpeak(selectedVoicLang['loginErrorMsg']);
+          await login();
+        } else {
+          await voiceController.tts.awaitSpeakCompletion(true);
+          await _loginScreenSpeak(selectedVoicLang['loginSuccessMsg']);
+          await _saveSharedPref();
+          emit(LoginSuccessState());
+        }
+      } catch (e) {
+        print('eeeeeeeeeeeeeeee $e');
+        await voiceController.tts.awaitSpeakCompletion(true);
+        await _loginScreenSpeak(selectedVoicLang['loginErrorMsg']);
+        await login();
+      }
+    } else {
+      await voiceController.tts.awaitSpeakCompletion(true);
+      await _loginScreenSpeak(selectedVoicLang['loginErrorMsg']);
+      await login();
+    }
   }
 
   /// register screen ///
@@ -282,12 +292,14 @@ class UserCubit extends Cubit<UserState> {
     try {
       Uint8List uniImg = await capturedImg!.readAsBytes();
       String img = base64Encode(uniImg);
+      List predictedImage = face_utils.mlService!.predictedData;
       UserModel userModel = UserModel(
         0,
         userName,
         img,
         DateTime.now().toString(),
-        0
+        0,
+        predictedImage
       );
       DatabaseHelper databaseHelper = DatabaseHelper.instance;
       databaseHelper.insert(userModel);
@@ -323,21 +335,6 @@ class UserCubit extends Cubit<UserState> {
       },
       listenFor: Duration(seconds: 4),
     );
-  }
-
-  Future<String> _authenticate() async {
-    bool _pic = await face_utils.detectFace();
-    if (!_pic) {
-      return 'notAPerson';
-    }
-    
-    User? user = await mlService!.predict();
-    
-    if (user == null) {
-      return 'loginErrorMsg';
-    } else {
-      return 'loginSuccessMsg';
-    }
   }
 
   Future<void> _saveSharedPref() async {

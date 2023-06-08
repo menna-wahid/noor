@@ -4,11 +4,13 @@ import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:noor/image_state.dart';
 import 'package:noor/trusted_people/logic/databse_helper.dart';
 import 'package:noor/users/logic/face_utils.dart';
 import 'package:noor/users/logic/user.model.dart';
 import 'package:noor/users/logic/face_utils.dart' as face_utils;
+import 'package:image/image.dart'as image_package;
 
 
 class ImageCubit extends Cubit<ImageState> {
@@ -44,17 +46,18 @@ class ImageCubit extends Cubit<ImageState> {
     try {
       Uint8List uniImg = await capturedImg!.readAsBytes();
       String img = base64Encode(uniImg);
+      List predictedImage = face_utils.mlService!.predictedData;
       UserModel userModel = UserModel(
         0,
-        'ahmed',
+        'testName',
         img,
         DateTime.now().toString(),
-        1
+        1,
+        predictedImage
       );
       DatabaseHelper databaseHelper = DatabaseHelper.instance;
       databaseHelper.insert(userModel);
       face_utils.mlService!.setPredictedData([]);
-      print('done');
     } catch (e) {
       print(e);
     }
@@ -76,11 +79,16 @@ class ImageCubit extends Cubit<ImageState> {
   }
 
   Future<void> login() async {
-    List predictedData = await mlService!.predictedData;
-    var usr = await mlService!.predict();
-    // el mafrod hena en predict btnfz method f el background bt2ol eza kan el sorten mot4abhen
-      // wla la lma btm3l compare ma ben el dtected face f el pic ely saved w el pic ly lsa mta5da
-      // b3d ma ygeb predictedData mn kol swra lw7dha
-      // TEST hena el awl w b3dha kamel إن شاء الله
+    if (faceDetectorService!.faceDetected) {
+      try {
+        UserModel? usr = await mlService!.predict();
+        print('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII $usr');
+      } catch (e) {
+        print('eeeeeeeeeeeeeee $e');
+      }
+      print('true');
+    } else {
+      print('false');
+    }
   }
 }

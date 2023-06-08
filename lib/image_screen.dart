@@ -56,11 +56,17 @@ class _ImageScreenState extends State<ImageScreen> {
               Navigator.push(context, MaterialPageRoute(builder: (_) => Users()));
             },
           ),
+          FloatingActionButton(
+            heroTag: 'l',
+            child: Icon(Icons.lock, color: Colors.white, size: 20.0),
+            onPressed: () async {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreeeeeeen()));
+            },
+          ),
         ],
       ),
       body: BlocBuilder<ImageCubit, ImageState>(
         builder: (context, state) {
-          print(state);
           if (state is ImageInitLoadingState) {
             return Center(child: CircularProgressIndicator());
           } else if (state is ImageDetectedState) {
@@ -154,6 +160,67 @@ class _UsersState extends State<Users> {
           }
         },
       ),
+    );
+  }
+}
+
+
+class LoginScreeeeeeen extends StatefulWidget {
+  const LoginScreeeeeeen({super.key});
+
+  @override
+  State<LoginScreeeeeeen> createState() => _LoginScreeeeeeenState();
+}
+
+class _LoginScreeeeeeenState extends State<LoginScreeeeeeen> {
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black, size: 25),
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'l',
+        child: Icon(Icons.verified, color: Colors.white, size: 20.0),
+        onPressed: () async {
+          BlocProvider.of<ImageCubit>(context).login();
+        },
+      ),
+      body: BlocBuilder<ImageCubit, ImageState>(
+        builder: (context, state) {
+          return Transform.scale(
+            scale: 1.0,
+            child: AspectRatio(
+              aspectRatio: MediaQuery.of(context).size.aspectRatio,
+              child: OverflowBox(
+                alignment: Alignment.center,
+                child: FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: Container(
+                    width: width,
+                    height:
+                        width * cameraService!.cameraController!.value.aspectRatio,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: <Widget>[
+                        CameraPreview(cameraService!.cameraController!),
+                        if (faceDetectorService!.faceDetected)
+                          CustomPaint(
+                            painter: FacePainter(
+                              face: faceDetectorService!.faces[0],
+                              imageSize: cameraService!.getImageSize(),
+                            ),
+                          )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      )
     );
   }
 }

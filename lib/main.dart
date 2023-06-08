@@ -57,15 +57,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => LangCubit(),
         ),
-        BlocProvider(
-          create: (context) => ImageCubit(),
-        ),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        // home: HomePage(),
-        // home: SplashScreen(),
-        home: ImageScreen(),
+        home: SplashScreen(),
       ),
     );
   }
