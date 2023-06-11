@@ -61,6 +61,8 @@ final Map<String, dynamic> entxts = {
   'registerSavingSuccess' : 'You are registered Succefully',
   'savingError' : 'Error Occure while saving try again',
   'nameSaved' : 'Name Saved Succesfully',
+  'notVerified' : 'Not Verified Person',
+  'verifiedPerson' : 'Verified Person and his Name is'
 };
 
 final Map<String, dynamic> artxts = {
@@ -113,6 +115,8 @@ final Map<String, dynamic> artxts = {
   'sayUrName' : 'الان قول اسمك',
   'yourName' : 'اسمك هو',
   'registerSavingSuccess' : 'لقد قمت بالتسجيل بنجاح',
+  'notVerified' : 'شخض غير معروف',
+  'verifiedPerson' : 'شخص معروف واسمه هو'
 };
 
 Map<String, Map<String, dynamic>> categoryData = {

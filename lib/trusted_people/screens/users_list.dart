@@ -5,6 +5,7 @@ import 'package:noor/shared/shared_theme/shared_fonts.dart';
 import 'package:noor/trusted_people/logic/trusted_people_cubit.dart';
 import 'package:noor/trusted_people/logic/trusted_people_state.dart';
 import 'package:noor/trusted_people/screens/add_user.dart';
+import 'package:noor/trusted_people/screens/verify_user.dart';
 
 
 class TrustedUsersList extends StatefulWidget {
@@ -50,6 +51,8 @@ class _TrustedUsersListState extends State<TrustedUsersList> {
       return Center(child: CircularProgressIndicator());
     } else if (state is AddPeopleState) {
       return AddUserScreen(state.columnWidgets);
+    } else if (state is VerifyPeopleState) {
+      return VerifyUserScreen();
     } else {
       container = Container(
         margin: EdgeInsets.all(10.0),

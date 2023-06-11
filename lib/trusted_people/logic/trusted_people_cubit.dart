@@ -115,7 +115,7 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
       if (newService == 'trusted') {
         await _readTrustedPeople();
       } else if (newService == 'verify') {
-
+        await _initVerifyPeople();
       } else if (newService == 'people') {
         await initAddPeople();
       } else {
@@ -307,6 +307,40 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
       return true;
     } catch (e) {
       return false;
+    }
+  }
+
+  Future<void> _initVerifyPeople() async {
+    emit(VerifyPeopleState());
+    emit(VerifyPeopleLoadingState());
+    await face_utils.initServices();
+    await _trustedPeopleSpeak(selectedVoicLang['putCamera']!);
+    emit(VerifyPeopleInitState());
+    await face_utils.startPredicting();
+  }
+
+  Future<void> verifyPeople() async {
+    if (face_utils.faceDetectorService!.faceDetected) {
+      try {
+        UserModel? usr = await face_utils.mlService!.predict();
+        if (usr == null) {
+          await voiceController.tts.awaitSpeakCompletion(true);
+          await _trustedPeopleSpeak(selectedVoicLang['notVerified']);
+        } else {
+          await voiceController.tts.awaitSpeakCompletion(true);
+          await _trustedPeopleSpeak(selectedVoicLang['verifiedPerson']);
+          await voiceController.tts.awaitSpeakCompletion(true);
+          await _trustedPeopleSpeak(selectedVoicLang[usr.userName]);
+          emit(VerifyPeopleSuccessState());
+        }
+      } catch (e) {
+        await voiceController.tts.awaitSpeakCompletion(true);
+        await _trustedPeopleSpeak(selectedVoicLang['notVerified']);
+        await verifyPeople();
+      }
+    } else {
+      await voiceController.tts.awaitSpeakCompletion(true);
+      await _trustedPeopleSpeak(selectedVoicLang['notVerified']);
     }
   }
 

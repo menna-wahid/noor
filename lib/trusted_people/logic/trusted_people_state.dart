@@ -14,3 +14,11 @@ class AddPeopleState extends TrustedPeopleState {
   List<Widget> columnWidgets;
   AddPeopleState({required this.columnWidgets});
 }
+
+class VerifyPeopleState extends TrustedPeopleState {}
+
+class VerifyPeopleLoadingState extends TrustedPeopleState {}
+
+class VerifyPeopleInitState extends TrustedPeopleState {}
+
+class VerifyPeopleSuccessState extends TrustedPeopleState {}

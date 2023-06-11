@@ -3,33 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noor/face_app/FacePainter.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
-import 'package:noor/users/logic/user_state.dart';
-import 'package:noor/users/logic/users_cubit.dart';
+import 'package:noor/trusted_people/logic/trusted_people_cubit.dart';
+import 'package:noor/trusted_people/logic/trusted_people_state.dart';
 import 'package:noor/users/logic/face_utils.dart' as face_utils;
 
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class VerifyUserScreen extends StatefulWidget {
+  const VerifyUserScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<VerifyUserScreen> createState() => _VerifyUserScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _VerifyUserScreenState extends State<VerifyUserScreen> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: SharedColors.backGroundColor,
-      body: BlocBuilder<UserCubit, UserState>(builder: (context, state) {
-        UserCubit services = BlocProvider.of<UserCubit>(context);
-        services.reloadWhendetectFace(true);
-        if (state is LoginUserLoadingState) {
+      body: BlocBuilder<TrustedPeopleCubit, TrustedPeopleState>(builder: (context, state) {
+        TrustedPeopleCubit services = BlocProvider.of<TrustedPeopleCubit>(context);
+        services.reloadWhendetectFace();
+        if (state is VerifyPeopleLoadingState) {
           return Center(child: CircularProgressIndicator());
         } else {
           return InkWell(
             onDoubleTap: () {
-              BlocProvider.of<UserCubit>(context).login();
+              BlocProvider.of<TrustedPeopleCubit>(context).verifyPeople();
             },
             child: Transform.scale(
               scale: 1.0,
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: <Widget>[
                           InkWell(
                             onDoubleTap: () {
-                              BlocProvider.of<UserCubit>(context).login();
+                              BlocProvider.of<TrustedPeopleCubit>(context).verifyPeople();
                             },
                             child: CameraPreview(face_utils.cameraService!.cameraController!),
                           ),
