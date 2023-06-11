@@ -23,8 +23,8 @@ class _VerifyUserScreenState extends State<VerifyUserScreen> {
       backgroundColor: SharedColors.backGroundColor,
       body: BlocBuilder<TrustedPeopleCubit, TrustedPeopleState>(builder: (context, state) {
         TrustedPeopleCubit services = BlocProvider.of<TrustedPeopleCubit>(context);
-        services.reloadWhendetectFace();
-        if (state is VerifyPeopleLoadingState) {
+        services.reloadWhendetectFace(false);
+        if (state is TrustedPeopleLoadingState) {
           return Center(child: CircularProgressIndicator());
         } else {
           return InkWell(

@@ -36,7 +36,7 @@ class _TrustedUsersListState extends State<TrustedUsersList> {
       body: BlocBuilder<TrustedPeopleCubit, TrustedPeopleState>(
         builder: (context, state) {
           if (state is AddPeopleState) {
-            BlocProvider.of<TrustedPeopleCubit>(context).reloadWhendetectFace();
+            BlocProvider.of<TrustedPeopleCubit>(context).reloadWhendetectFace(true);
           }
           TrustedPeopleCubit cubit = BlocProvider.of<TrustedPeopleCubit>(context);
           return buildBody(state, cubit);

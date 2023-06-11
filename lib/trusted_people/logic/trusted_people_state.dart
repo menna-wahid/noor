@@ -17,8 +17,4 @@ class AddPeopleState extends TrustedPeopleState {
 
 class VerifyPeopleState extends TrustedPeopleState {}
 
-class VerifyPeopleLoadingState extends TrustedPeopleState {}
-
-class VerifyPeopleInitState extends TrustedPeopleState {}
-
 class VerifyPeopleSuccessState extends TrustedPeopleState {}

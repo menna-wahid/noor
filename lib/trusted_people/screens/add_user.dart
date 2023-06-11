@@ -55,7 +55,7 @@ class _AddPeopleCameraWidgetState extends State<AddPeopleCameraWidget> {
     double width = MediaQuery.of(context).size.width;
     return BlocBuilder<TrustedPeopleCubit, TrustedPeopleState>(
       builder: (context, state) {
-        BlocProvider.of<TrustedPeopleCubit>(context).reloadWhendetectFace();
+        BlocProvider.of<TrustedPeopleCubit>(context).reloadWhendetectFace(true);
         return Container(
           height: MediaQuery.of(context).size.height / 2,
           width: width,

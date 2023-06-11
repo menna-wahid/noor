@@ -2,11 +2,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:noor/image_cubit.dart';
-import 'package:noor/image_screen.dart';
 import 'package:noor/navigation/logic/lang_cubit.dart';
 import 'package:noor/navigation/logic/navigation_cubit.dart';
-import 'package:noor/navigation/screens/homepage.dart';
 import 'package:noor/shared/shared_data.dart';
 import 'package:noor/splash_screen.dart';
 import 'package:noor/trusted_people/logic/trusted_people_cubit.dart';
@@ -20,7 +17,7 @@ List<CameraDescription> cameras = [];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initServices();
+  await initServices(CameraLensDirection.front);
   cameras = await availableCameras();
   runApp(MyApp());
 }

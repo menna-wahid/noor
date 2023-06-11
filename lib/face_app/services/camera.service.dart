@@ -13,19 +13,19 @@ class CameraService {
   String? _imagePath;
   String? get imagePath => this._imagePath;
 
-  Future<void> initialize() async {
+  Future<void> initialize(CameraLensDirection cameraLensDirection) async {
     if (_cameraController != null) return;
-    CameraDescription description = await _getCameraDescription();
+    CameraDescription description = await _getCameraDescription(cameraLensDirection);
     await _setupCameraController(description: description);
     this._cameraRotation = rotationIntToImageRotation(
       description.sensorOrientation,
     );
   }
 
-  Future<CameraDescription> _getCameraDescription() async {
+  Future<CameraDescription> _getCameraDescription(CameraLensDirection cameraLensDirection) async {
     List<CameraDescription> cameras = await availableCameras();
     return cameras.firstWhere((CameraDescription camera) =>
-        camera.lensDirection == CameraLensDirection.front);
+        camera.lensDirection == cameraLensDirection);
   }
 
   Future _setupCameraController({

@@ -82,7 +82,7 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> initLoginScreen() async {
     emit(LoginUserLoadingState());
-    await face_utils.initServices();
+    await face_utils.initServices(CameraLensDirection.front);
     await _loginScreenSpeak(selectedVoicLang['loginWelcomeMsg']!);
     emit(LoginInitState());
     await face_utils.startPredicting();
@@ -119,7 +119,7 @@ class UserCubit extends Cubit<UserState> {
   
   Future<void> initRegisterScreen() async {
     emit(RegisterUserLoadingState());
-    await face_utils.initServices();
+    await face_utils.initServices(CameraLensDirection.front);
     await _loginScreenSpeak(selectedVoicLang['registerWelcomeMsg']!);
     await face_utils.startPredicting();
     await _initAddPeopleImg();

@@ -8,11 +8,11 @@ CameraService? cameraService;
 FaceDetectorService? faceDetectorService;
 MLService? mlService;
 
-Future<void> initServices() async {
+Future<void> initServices(CameraLensDirection cameraLensDirection) async {
   cameraService = CameraService();
   faceDetectorService = FaceDetectorService();
   mlService = MLService();
-  await cameraService!.initialize();
+  await cameraService!.initialize(cameraLensDirection);
   await mlService!.initialize();
   faceDetectorService!.initialize();
 }

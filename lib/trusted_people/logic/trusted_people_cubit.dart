@@ -156,7 +156,7 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
   Future<void> initAddPeople() async {
     emit(TrustedPeopleLoadingState());
     await _trustedPeopleSpeak(selectedVoicLang['addPeopleInitMsg']);
-    await face_utils.initServices();
+    await face_utils.initServices(CameraLensDirection.front);
     await face_utils.startPredicting();
     await _initAddPeopleImg();
     _widgets.clear();
@@ -311,11 +311,10 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
   }
 
   Future<void> _initVerifyPeople() async {
-    emit(VerifyPeopleState());
-    emit(VerifyPeopleLoadingState());
-    await face_utils.initServices();
+    emit(TrustedPeopleLoadingState());
+    await face_utils.initServices(CameraLensDirection.front);
     await _trustedPeopleSpeak(selectedVoicLang['putCamera']!);
-    emit(VerifyPeopleInitState());
+    emit(VerifyPeopleState());
     await face_utils.startPredicting();
   }
 
@@ -330,12 +329,12 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
           await voiceController.tts.awaitSpeakCompletion(true);
           await _trustedPeopleSpeak(selectedVoicLang['verifiedPerson']);
           await voiceController.tts.awaitSpeakCompletion(true);
-          await _trustedPeopleSpeak(selectedVoicLang[usr.userName]);
+          await _trustedPeopleSpeak(usr.userName);
           emit(VerifyPeopleSuccessState());
         }
       } catch (e) {
         await voiceController.tts.awaitSpeakCompletion(true);
-        await _trustedPeopleSpeak(selectedVoicLang['notVerified']);
+        await _trustedPeopleSpeak(selectedVoicLang['someThingWrong']);
         await verifyPeople();
       }
     } else {
@@ -344,7 +343,9 @@ class TrustedPeopleCubit extends Cubit<TrustedPeopleState> {
     }
   }
 
-  Future<void> reloadWhendetectFace() async {
-    emit(AddPeopleState(columnWidgets: _widgets));
+  Future<void> reloadWhendetectFace(bool isAdd) async {
+    isAdd ? 
+    emit(AddPeopleState(columnWidgets: _widgets)) : 
+    emit(VerifyPeopleState());
   }
 }
