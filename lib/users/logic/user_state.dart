@@ -18,3 +18,5 @@ class RegisterUserState extends UserState {
 }
 
 class RegisterUserLoadingState extends UserState {}
+
+class RegisterUserSuccessState extends UserState {}

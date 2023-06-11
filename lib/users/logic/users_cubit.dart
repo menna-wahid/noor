@@ -71,7 +71,7 @@ class UserCubit extends Cubit<UserState> {
       await initRegisterScreen();
       emit(RegisterUserState(columnWidgets: _widgets));
     } else if (word == 'login') {
-      initLoginScreen();
+      await initLoginScreen();
       emit(LoginInitState());
     }
   }
@@ -80,28 +80,21 @@ class UserCubit extends Cubit<UserState> {
 
   /// login screen ///
 
-  void initLoginScreen() async {
+  Future<void> initLoginScreen() async {
     emit(LoginUserLoadingState());
     await face_utils.initServices();
     await _loginScreenSpeak(selectedVoicLang['loginWelcomeMsg']!);
+    emit(LoginInitState());
     await face_utils.startPredicting();
   }
 
-  int _loginCounter = 0;
   Future<void> login() async {
-    if (_loginCounter >= 3) {
-      await voiceController.tts.awaitSpeakCompletion(true);
-      await _loginScreenSpeak(selectedVoicLang['proccessCancelled']);
-      _loginCounter = 0;
-      return;
-    }
     if (face_utils.faceDetectorService!.faceDetected) {
       try {
         UserModel? usr = await mlService!.predict();
         if (usr == null) {
           await voiceController.tts.awaitSpeakCompletion(true);
           await _loginScreenSpeak(selectedVoicLang['loginErrorMsg']);
-          await login();
         } else {
           await voiceController.tts.awaitSpeakCompletion(true);
           await _loginScreenSpeak(selectedVoicLang['loginSuccessMsg']);
@@ -109,7 +102,6 @@ class UserCubit extends Cubit<UserState> {
           emit(LoginSuccessState());
         }
       } catch (e) {
-        print('eeeeeeeeeeeeeeee $e');
         await voiceController.tts.awaitSpeakCompletion(true);
         await _loginScreenSpeak(selectedVoicLang['loginErrorMsg']);
         await login();
@@ -117,7 +109,6 @@ class UserCubit extends Cubit<UserState> {
     } else {
       await voiceController.tts.awaitSpeakCompletion(true);
       await _loginScreenSpeak(selectedVoicLang['loginErrorMsg']);
-      await login();
     }
   }
 
@@ -231,7 +222,7 @@ class UserCubit extends Cubit<UserState> {
         _widgets.add(AddPeopleSuccessWidget());
         await _saveSharedPref();
         emit(RegisterUserState(columnWidgets: _widgets));
-        emit(UserBackState());
+        emit(RegisterUserSuccessState());
       } else {
         _addNameCounter = 0;
         _addImgCounter = 0;
@@ -310,7 +301,8 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future<void> reloadWhendetectFace() async {
+  Future<void> reloadWhendetectFace(bool isLogin) async {
+    isLogin ? emit(LoginInitState()) :
     emit(RegisterUserState(columnWidgets: _widgets));
   }
 

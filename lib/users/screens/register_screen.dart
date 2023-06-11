@@ -49,7 +49,7 @@ class _RegisterCameraWidgetState extends State<RegisterCameraWidget> {
     double width = MediaQuery.of(context).size.width;
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
-        BlocProvider.of<UserCubit>(context).reloadWhendetectFace();
+        BlocProvider.of<UserCubit>(context).reloadWhendetectFace(false);
         return Container(
           height: MediaQuery.of(context).size.height / 2,
           width: width,

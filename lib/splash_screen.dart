@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noor/main.dart';
 import 'package:noor/navigation/logic/lang_cubit.dart';
+import 'package:noor/navigation/screens/homepage.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/shared/shared_theme/shared_fonts.dart';
 import 'package:noor/users/logic/user_state.dart';
@@ -66,6 +67,8 @@ class _SplashScreenState extends State<SplashScreen> {
       return RegisterScreen();
     } else if (state is LoginInitState) {
       return LoginScreen();
+    } else if (state is LoginSuccessState || state is RegisterUserSuccessState) {
+      return HomePage();
     } else {
       return homeWidget();
     }
