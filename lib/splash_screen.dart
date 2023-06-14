@@ -84,7 +84,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: MediaQuery.of(context).size.height / 3,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/icons/wlc.jpg'),
+                      image: AssetImage('assets/icons/logo.png'),
                       fit: BoxFit.fill)),
             ),
             TextButton(
