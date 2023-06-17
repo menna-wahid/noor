@@ -58,8 +58,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        // home: SplashScreen(),
-        home: UberScreen(),
+        home: SplashScreen(),
       ),
     );
   }
