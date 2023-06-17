@@ -1,3 +1,4 @@
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:noor/shared/shared_theme/shared_colors.dart';
 import 'package:noor/shared/shared_theme/shared_fonts.dart';
@@ -10,6 +11,13 @@ class UberScreen extends StatefulWidget {
 }
 
 class _UberScreenState extends State<UberScreen> {
+
+  @override
+  void initState() {
+    openApp();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,17 +29,11 @@ class _UberScreenState extends State<UberScreen> {
       ),
     );
   }
+
+  Future<void> openApp() async {
+    await LaunchApp.openApp(
+      androidPackageName: 'com.ubercab',
+      appStoreLink: 'https://play.google.com/store/apps/details?id=com.ubercab&hl=en&gl=US',
+    );
+  }
 }
-
-
-/*
-
-  ClientId, ClientSecret, ServerToken
-
-  1- Selecting Service ( UberX )
-  2- Specifying Pickup & Dropoff Location
-  3- Viweing time and price estimates
-  4- Requesting a Ride
-
-
-*/

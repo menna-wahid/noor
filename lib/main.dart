@@ -7,6 +7,7 @@ import 'package:noor/navigation/logic/navigation_cubit.dart';
 import 'package:noor/shared/shared_data.dart';
 import 'package:noor/splash_screen.dart';
 import 'package:noor/trusted_people/logic/trusted_people_cubit.dart';
+import 'package:noor/uber_screen.dart';
 import 'package:noor/users/logic/face_utils.dart';
 import 'package:noor/users/logic/users_cubit.dart';
 import 'package:noor/voice_assist/logic/voice_controller.dart';
@@ -57,7 +58,8 @@ class _MyAppState extends State<MyApp> {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        // home: SplashScreen(),
+        home: UberScreen(),
       ),
     );
   }
