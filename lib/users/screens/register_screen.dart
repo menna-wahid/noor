@@ -19,18 +19,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: SharedColors.backGroundColor,
-      body: BlocBuilder<UserCubit, UserState>(
-        builder: (context, state) {
-          return InkWell(
-            onDoubleTap: () {
-              BlocProvider.of<UserCubit>(context).takePic();
-            },
-            child: state is RegisterUserLoadingState ?
-              Center(child: CircularProgressIndicator()) : state is RegisterUserState ? Column(children: state.columnWidgets) :
-              Container(color: Colors.black)
-          );
-        }
-      ),
+      body: Container(
+          decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF42A5F5),
+              Color(0xFF90CAF9),
+              Color(0xFFA1C4FD),
+              Color(0xFFCAE9F5),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+          child: BlocBuilder<UserCubit, UserState>(
+          builder: (context, state) {
+            return InkWell(
+              onDoubleTap: () {
+                BlocProvider.of<UserCubit>(context).takePic();
+              },
+              child: state is RegisterUserLoadingState ?
+                Center(child: CircularProgressIndicator()) : state is RegisterUserState ? Column(children: state.columnWidgets) :
+                Container(color: Colors.black)
+            );
+          }
+        ),
+      )
     );
   }
 }

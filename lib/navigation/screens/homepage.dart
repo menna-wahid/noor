@@ -36,7 +36,18 @@ class _HomePageState extends State<HomePage> {
     if (state is InitNavigationState) {
       BlocProvider.of<NavigationCubit>(context).initNavigation();
       return Container(
-        margin: EdgeInsets.all(10.0),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF42A5F5),
+              Color(0xFF90CAF9),
+              Color(0xFFA1C4FD),
+              Color(0xFFCAE9F5),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
         child: GridView(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, mainAxisSpacing: 10.0, childAspectRatio: 1.0),
@@ -59,7 +70,6 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     } else if (state is ScreenNavigationState) {
-      // Navigator.push(context, MaterialPageRoute(builder: (_) => state.screen));
       return state.screen;
     } else {
       return Center(

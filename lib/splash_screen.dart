@@ -98,7 +98,9 @@ class _SplashScreenState extends State<SplashScreen> {
                   fixedSize: Size(200.0, 50.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0))),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
+              },
             ),
             TextButton(
               child: Text(
@@ -111,7 +113,9 @@ class _SplashScreenState extends State<SplashScreen> {
                   fixedSize: Size(200.0, 50.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0))),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
+              },
             ),
           ],
         ),

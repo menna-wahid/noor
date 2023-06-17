@@ -21,7 +21,20 @@ class _LoginScreenState extends State<LoginScreen> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: SharedColors.backGroundColor,
-      body: BlocBuilder<UserCubit, UserState>(builder: (context, state) {
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF42A5F5),
+              Color(0xFF90CAF9),
+              Color(0xFFA1C4FD),
+              Color(0xFFCAE9F5),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: BlocBuilder<UserCubit, UserState>(builder: (context, state) {
         UserCubit services = BlocProvider.of<UserCubit>(context);
         services.reloadWhendetectFace(true);
         if (state is LoginUserLoadingState) {
@@ -69,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
       }),
+      )
     );
   }
 }

@@ -104,7 +104,6 @@ class NavigationCubit extends Cubit<NavigationState> {
       await _listenNow();
     } else {
       emit(ScreenNavigationState(categoryData[newService]!['screen']));
-      await _navigationScreenSpeak('correct thank you');
     }
   }
 }
